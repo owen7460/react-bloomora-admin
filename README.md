@@ -1,78 +1,249 @@
-# React + TypeScript + Vite
+# 🌸 Bloomora Merchant Admin
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Merchant management dashboard for **Bloomora**, a florist management
+platform designed to manage products, inventory, orders, customers, and
+day-to-day flower shop operations.
 
-Currently, two official plugins are available:
+This application provides the merchant-facing interface for the Bloomora
+platform and communicates with the Bloomora FastAPI backend through REST
+APIs.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🛠 Tech Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Technology Purpose
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+---
 
-## Expanding the ESLint configuration
+**React** Frontend UI library
+**TypeScript** Type-safe JavaScript
+**Vite** Development and build tool
+**ESLint** Code quality and linting
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Additional libraries will be introduced as the project develops.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Product Management
 
+- View products
+- Create products
+- Edit product information
+- Delete products
+- Manage product availability
+- Manage product images
+- Search and filter products
+
+### Inventory Management
+
+- View current inventory
+- Update stock quantities
+- View low-stock products
+- Configure low-stock thresholds
+
+### Order Management
+
+- View customer orders
+- View order details
+- Update order status
+- Search and filter orders
+
+### Customer Management
+
+- View customers
+- View customer profiles
+- View customer order history
+
+### Dashboard
+
+- Sales overview
+- Revenue statistics
+- Recent orders
+- Inventory status
+- Low-stock alerts
+
+### Authentication
+
+- Merchant login
+- JWT-based authentication
+- Protected routes
+- Role-based access control
+
+---
+
+## 📁 Project Structure
+
+Planned project structure:
+
+```text
+src/
+│
+├── api/
+│   ├── client.ts
+│   ├── products.ts
+│   ├── inventory.ts
+│   ├── orders.ts
+│   └── customers.ts
+│
+├── components/
+│   ├── ui/
+│   ├── layout/
+│   └── common/
+│
+├── features/
+│   ├── products/
+│   ├── inventory/
+│   ├── orders/
+│   ├── customers/
+│   └── auth/
+│
+├── pages/
+│   ├── Dashboard/
+│   ├── Products/
+│   ├── Inventory/
+│   ├── Orders/
+│   ├── Customers/
+│   └── Login/
+│
+├── hooks/
+├── stores/
+├── types/
+├── utils/
+├── App.tsx
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🔌 Backend API
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Bloomora Merchant Admin communicates with the Bloomora FastAPI backend.
 
+```text
+React
+   ↓
+API Client
+   ↓
+FastAPI REST API
+   ↓
+Service Layer
+   ↓
+SQLAlchemy
+   ↓
+MySQL
 ```
+
+The initial frontend development will integrate with the Product API:
+
+```http
+GET     /api/products
+GET     /api/products/{id}
+POST    /api/products
+PATCH   /api/products/{id}
+DELETE  /api/products/{id}
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Create a `.env` file when API integration is introduced:
+
+```env
+VITE_API_BASE_URL=http://localhost:8000/api
+```
+
+> Never commit `.env` files containing sensitive configuration.
+
+### 3. Start the Development Server
+
+```bash
+npm run dev
+```
+
+---
+
+## 🗺 Roadmap
+
+### Phase 1 --- Foundation
+
+- [ ] React + TypeScript project setup
+- [ ] Project folder architecture
+- [ ] React Router configuration
+- [ ] Global layout
+- [ ] Sidebar navigation
+- [ ] API client configuration
+
+### Phase 2 --- Product Management
+
+- [ ] Product list page
+- [ ] Product details
+- [ ] Create product
+- [ ] Edit product
+- [ ] Delete product
+- [ ] Product search
+- [ ] Product filtering
+- [ ] Product availability controls
+
+### Phase 3 --- Authentication
+
+- [ ] Login page
+- [ ] Authentication state
+- [ ] JWT handling
+- [ ] Protected routes
+- [ ] Logout
+- [ ] Role-based UI authorization
+
+### Phase 4 --- Business Operations
+
+- [ ] Inventory management
+- [ ] Category management
+- [ ] Customer management
+- [ ] Order management
+- [ ] Order status workflow
+
+### Phase 5 --- Dashboard & Analytics
+
+- [ ] Dashboard overview
+- [ ] Revenue metrics
+- [ ] Sales analytics
+- [ ] Inventory analytics
+- [ ] Low-stock alerts
+- [ ] Recent order activity
+
+### Phase 6 --- AI Features
+
+- [ ] AI florist assistant
+- [ ] Inventory insights
+- [ ] Product description generation
+- [ ] Sales summaries
+- [ ] Natural-language business queries
+
+---
+
+## 🎯 Project Goals
+
+Bloomora Merchant Admin is designed to provide a practical,
+production-oriented management interface for florist businesses.
+
+The project focuses on:
+
+- Scalable React architecture
+- Reusable UI components
+- Type-safe frontend development
+- REST API integration
+- Server-state management
+- Authentication and authorization
+- Responsive dashboard design
+- Maintainable feature-based architecture
