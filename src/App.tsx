@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Product } from "@/types/products";
-import { getProducts } from "@/apis/getProducts";
+import { getProducts } from "@/apis/products";
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -9,7 +9,7 @@ function App() {
       try {
         const res = await getProducts();
         setProducts(res.data);
-        console.log(res.data);
+        console.log(res);
       } catch (error) {
         console.error("fetch products error", error);
       }
