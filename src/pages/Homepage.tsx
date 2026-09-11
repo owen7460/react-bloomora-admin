@@ -19,7 +19,7 @@ function App() {
 
   return (
     <>
-      <h1>Welcome admin -- Bloomora</h1>
+      <h1 className="text-amber-500 font-bold">Welcome admin -- Bloomora</h1>
       <div>
         {products.map((product) => (
           <div key={product.id}>
