@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
 import type { Product } from "@/types/products";
 import { getProducts } from "@/apis/products";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -20,19 +30,45 @@ export default function Products() {
 
   return (
     <>
-      <h1 className="text-amber-500 font-bold">Welcome admin -- Bloomora</h1>
-      <div>
-        {products.map((product) => (
-          <div key={product.id}>
-            <p>{product.name}</p>
-            <p>${product.price}</p>
-            <p>{product.description}</p>
-            <p>{product.created_at}</p>
-            <p>{product.updated_at}</p>
-            <hr />
-          </div>
-        ))}
-      </div>
+      <Table>
+        <TableCaption>A list of your products inventory.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[150px] text-primary">
+              Product Name
+            </TableHead>
+            <TableHead className="text-primary">SKU</TableHead>
+            <TableHead className="text-primary">Price</TableHead>
+            <TableHead className="text-primary">Status</TableHead>
+            <TableHead className="text-primary">Stock</TableHead>
+            {/* <TableHead className="text-right">Actions</TableHead> */}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {products.map((product) => (
+            <TableRow key={product.id}>
+              <TableCell className="font-medium">{product.name}</TableCell>
+              <TableCell>{product.sku}</TableCell>
+              <TableCell>${product.price}</TableCell>
+              <TableCell>
+                {product.is_active === 1 ? "Active" : "Inactive"}
+              </TableCell>
+              <TableCell>{product.stock_quantity}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell>
+              {products.reduce(
+                (acc, product) => acc + product.stock_quantity,
+                0,
+              )}
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
     </>
   );
 }
