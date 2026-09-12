@@ -10,8 +10,14 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="flex justify-center items-center h-screen bg-[url(/bg.jpg)] bg-cover bg-center">
       <Card className="w-full py-14 px-6 max-w-md bg-white/80 backdrop-blur-sm [--card-spacing:--spacing(8)]">
@@ -53,7 +59,7 @@ export default function Login() {
           </form>
         </CardContent>
         <CardFooter className="flex-col mb-6 gap-4 bg-transparent">
-          <Button type="submit" className="w-full ">
+          <Button onClick={handleLogin} type="submit" className="w-full ">
             Login
           </Button>
           <Button variant="outline" className="w-full">

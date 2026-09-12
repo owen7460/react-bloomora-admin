@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import type { Product } from "@/types/products";
 import { getProducts } from "@/apis/products";
 
-export default function Homepage() {
+export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
