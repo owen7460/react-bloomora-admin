@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 export default function Login() {
   return (
     <div className="flex justify-center items-center h-screen bg-[url(/bg.jpg)] bg-cover bg-center">
-      <Card className="w-full py-14 px-6 max-w-md min-h-120 bg-white/80 backdrop-blur-sm">
+      <Card className="w-full py-14 px-6 max-w-md bg-white/80 backdrop-blur-sm [--card-spacing:--spacing(8)]">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Welcome,</CardTitle>
           <CardTitle className="text-3xl font-bold">Bloomora Admin</CardTitle>
@@ -52,7 +52,7 @@ export default function Login() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex-col gap-2 bg-transparent">
+        <CardFooter className="flex-col gap-4 bg-transparent">
           <Button type="submit" className="w-full ">
             Login
           </Button>
