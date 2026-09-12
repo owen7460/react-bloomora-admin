@@ -52,7 +52,7 @@ export default function Login() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex-col gap-4 bg-transparent">
+        <CardFooter className="flex-col mb-6 gap-4 bg-transparent">
           <Button type="submit" className="w-full ">
             Login
           </Button>
