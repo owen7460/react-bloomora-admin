@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Product } from "@/types/products";
-import { getProducts } from "@/apis/products";
+import { getProducts, deleteProduct } from "@/apis/products";
 import {
   Table,
   TableBody,
@@ -12,10 +12,22 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AddProductDialog from "@/components/AddProductDialog";
+import EditProductDialog from "@/components/EditProductDialog";
 import { toast } from "@/components/ui/toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { MoreHorizontalIcon } from "lucide-react";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [editOpen, setEditOpen] = useState<boolean>(false);
 
   const loadProducts = async () => {
     try {
@@ -24,6 +36,17 @@ export default function Products() {
       console.log(res);
     } catch (error) {
       console.error("fetch products error", error);
+    }
+  };
+
+  const handleDeleteProduct = async (id: number) => {
+    try {
+      const res = await deleteProduct(id);
+      await loadProducts();
+      console.log(res);
+      showToast(`${res.data.name} deleted successfully`);
+    } catch (error) {
+      console.error("delete product error", error);
     }
   };
 
@@ -39,6 +62,16 @@ export default function Products() {
       },
     });
   }
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product);
+    setEditOpen(true);
+  };
+
+  const handleProductUpdated = async () => {
+    await loadProducts();
+    showToast("Product updated successfully");
+  };
 
   const handleProductCreated = async () => {
     await loadProducts();
@@ -67,7 +100,7 @@ export default function Products() {
             <TableHead className="text-primary">Price</TableHead>
             <TableHead className="text-primary">Status</TableHead>
             <TableHead className="text-primary">Stock</TableHead>
-            {/* <TableHead className="text-right">Actions</TableHead> */}
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -81,12 +114,39 @@ export default function Products() {
                 {product.is_active === 1 ? "Active" : "Inactive"}
               </TableCell>
               <TableCell>{product.stock_quantity}</TableCell>
+              <TableCell className="text-right">
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={
+                      <Button variant="ghost" size="icon" className="size-8">
+                        <MoreHorizontalIcon />
+                        <span className="sr-only">Open menu</span>
+                      </Button>
+                    }
+                  />
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                      onClick={() => handleEditProduct(product)}
+                    >
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>View</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      variant="destructive"
+                      onClick={() => handleDeleteProduct(product.id)}
+                    >
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell colSpan={5}>Total</TableCell>
             <TableCell>
               {products.reduce(
                 (acc, product) => acc + product.stock_quantity,
@@ -96,6 +156,14 @@ export default function Products() {
           </TableRow>
         </TableFooter>
       </Table>
+      {editingProduct && (
+        <EditProductDialog
+          open={editOpen}
+          onOpenChange={setEditOpen}
+          product={editingProduct}
+          onProductUpdated={handleProductUpdated}
+        />
+      )}
     </>
   );
 }

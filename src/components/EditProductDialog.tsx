@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { PlusIcon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,28 +9,35 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createProduct } from "@/apis/products";
+import { updateProduct } from "@/apis/products";
+import type { Product } from "@/types/products";
 
 type Props = {
-  onProductCreated: () => Promise<void>;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  product: Product;
+  onProductUpdated: () => Promise<void>;
 };
 
-export default function AddProductDialog({ onProductCreated }: Props) {
-  const [open, setOpen] = useState<boolean>(false);
+export default function EditProductDialog({
+  open,
+  onOpenChange,
+  product,
+  onProductUpdated,
+}: Props) {
   const [name, setName] = useState("");
   const [sku, setSku] = useState("");
   const [price, setPrice] = useState(0);
 
   const handleOpenChange = (open: boolean) => {
-    setOpen(open);
+    onOpenChange(open);
   };
 
-  const handleAddProduct = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleUpdateProduct = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -42,9 +49,9 @@ export default function AddProductDialog({ onProductCreated }: Props) {
         low_stock_threshold: 0,
         unit: "item",
       };
-      const res = await createProduct(payload);
+      const res = await updateProduct(product.id, payload);
       console.log(res);
-      await onProductCreated();
+      await onProductUpdated();
 
       setName("");
       setSku("");
@@ -55,28 +62,22 @@ export default function AddProductDialog({ onProductCreated }: Props) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    setName(product.name);
+    setSku(product.sku);
+    setPrice(product.price);
+  }, [product]);
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger
-        render={
-          <Button
-            variant="outline"
-            className="bg-white text-primary hover:bg-primary hover:text-white"
-          >
-            <PlusIcon />
-            Add New Product
-          </Button>
-        }
-      />
       <DialogContent className="sm:max-w-lg">
-        <form onSubmit={handleAddProduct}>
+        <form onSubmit={handleUpdateProduct}>
           <DialogHeader>
             <DialogTitle className="text-primary text-2xl font-bold">
-              Add New Product
+              Edit Product
             </DialogTitle>
-            <DialogDescription>
-              Add a new product to your inventory.
-            </DialogDescription>
+            <DialogDescription>Edit the product details.</DialogDescription>
           </DialogHeader>
           <FieldGroup className="mt-4 mb-6">
             <Field>
@@ -133,8 +134,8 @@ export default function AddProductDialog({ onProductCreated }: Props) {
               type="submit"
               className="bg-primary text-white hover:bg-primary/90"
             >
-              <PlusIcon />
-              Add Product
+              <CheckIcon />
+              Update Product
             </Button>
           </DialogFooter>
         </form>

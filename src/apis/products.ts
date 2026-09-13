@@ -1,5 +1,11 @@
 import http from "@/apis/client";
-import type { GetProductsResponse,CreateProductPayload,CreateProductResponse } from "@/types/products";
+import type { GetProductsResponse,
+  CreateProductPayload,
+  CreateProductResponse,
+  UpdateProductPayload,
+  UpdateProductResponse,
+  DeleteProductResponse,
+} from "@/types/products";
 
 const getProducts = async (): Promise<GetProductsResponse> => {
   const res = await http.get("/products");
@@ -11,4 +17,14 @@ const createProduct = async (payload: CreateProductPayload): Promise<CreateProdu
   return res.data;
 };
 
-export { getProducts, createProduct };
+const updateProduct = async (id: number, payload: UpdateProductPayload): Promise<UpdateProductResponse> => {
+  const res = await http.patch(`/products/${id}`, payload);
+  return res.data;
+};
+
+const deleteProduct = async (id: number): Promise<DeleteProductResponse> => {
+  const res = await http.delete(`/products/${id}`);
+  return res.data;
+};
+
+export { getProducts, createProduct, updateProduct, deleteProduct };

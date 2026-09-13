@@ -39,3 +39,21 @@ export interface CreateProductResponse {
   message: string;
   data: Product;
 }
+
+export interface UpdateProductPayload {
+  name?: string;
+  sku?: string;
+  price?: number;
+}
+
+export interface UpdateProductResponse {
+  code: number;
+  message: string;
+  data: Product;
+}
+
+export interface DeleteProductResponse {
+  code: number;
+  message: string;
+  data: Product;
+}
