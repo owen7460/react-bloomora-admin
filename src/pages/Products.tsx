@@ -59,6 +59,7 @@ export default function Products() {
         <TableCaption>A list of your products inventory.</TableCaption>
         <TableHeader>
           <TableRow>
+            <TableHead className="text-primary">#</TableHead>
             <TableHead className="w-[150px] text-primary">
               Product Name
             </TableHead>
@@ -70,8 +71,9 @@ export default function Products() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product) => (
+          {products.map((product, index) => (
             <TableRow key={product.id}>
+              <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell className="font-medium">{product.name}</TableCell>
               <TableCell>{product.sku}</TableCell>
               <TableCell>${product.price}</TableCell>

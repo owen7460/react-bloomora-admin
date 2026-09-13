@@ -91,12 +91,12 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
+      title: "Events",
       url: "#",
       icon: <BookOpenIcon />,
       items: [
         {
-          title: "Introduction",
+          title: "Upcoming Events",
           url: "#",
         },
         {
@@ -139,7 +139,7 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Agent Suggestions",
       url: "#",
       icon: <FrameIcon />,
     },
@@ -149,7 +149,12 @@ const data = {
       icon: <PieChartIcon />,
     },
     {
-      name: "Travel",
+      name: "Users",
+      url: "#",
+      icon: <MapIcon />,
+    },
+    {
+      name: "Analytics",
       url: "#",
       icon: <MapIcon />,
     },
