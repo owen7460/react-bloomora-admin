@@ -24,6 +24,7 @@ import {
   MapIcon,
   Flower,
   ShoppingCartMinus,
+  NotepadText,
 } from "lucide-react";
 
 // This is sample data.
@@ -52,10 +53,28 @@ const data = {
   ],
   navMain: [
     {
+      title: "Summary",
+      url: "#",
+      icon: <NotepadText />,
+      items: [
+        {
+          title: "Today Summary",
+          url: "/dashboard",
+        },
+        // {
+        //   title: "This Week Summary",
+        //   url: "#",
+        // },
+        // {
+        //   title: "This Month Summary",
+        //   url: "#",
+        // },
+      ],
+    },
+    {
       title: "Inventory",
       url: "#",
       icon: <Flower />,
-      isActive: true,
       items: [
         {
           title: "All Products",
