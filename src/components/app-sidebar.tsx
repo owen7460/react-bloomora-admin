@@ -25,6 +25,7 @@ import {
   Flower,
   ShoppingCartMinus,
   NotepadText,
+  UsersRound,
 } from "lucide-react";
 
 // This is sample data.
@@ -170,7 +171,7 @@ const data = {
     {
       name: "Users",
       url: "#",
-      icon: <MapIcon />,
+      icon: <UsersRound />,
     },
     {
       name: "Analytics",
