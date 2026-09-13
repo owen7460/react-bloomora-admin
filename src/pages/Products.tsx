@@ -12,20 +12,40 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AddProductDialog from "@/components/AddProductDialog";
+import { toast } from "@/components/ui/toast";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
 
+  const loadProducts = async () => {
+    try {
+      const res = await getProducts();
+      setProducts(res.data);
+      console.log(res);
+    } catch (error) {
+      console.error("fetch products error", error);
+    }
+  };
+
+  function showToast(message: string) {
+    const id = toast.add({
+      title: "Inventory Management",
+      description: message,
+      actionProps: {
+        children: "OK",
+        onClick() {
+          toast.close(id);
+        },
+      },
+    });
+  }
+
+  const handleProductCreated = async () => {
+    await loadProducts();
+    showToast("Product added successfully");
+  };
+
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const res = await getProducts();
-        setProducts(res.data);
-        console.log(res);
-      } catch (error) {
-        console.error("fetch products error", error);
-      }
-    };
     loadProducts();
   }, []);
 
@@ -33,7 +53,7 @@ export default function Products() {
     <>
       <div className="flex justify-between items-center mb-4">
         <p className="text-2xl font-bold text-primary">Inventory Products</p>
-        <AddProductDialog />
+        <AddProductDialog onProductCreated={handleProductCreated} />
       </div>
       <Table>
         <TableCaption>A list of your products inventory.</TableCaption>

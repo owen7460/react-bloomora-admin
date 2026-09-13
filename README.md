@@ -247,3 +247,10 @@ The project focuses on:
 - Authentication and authorization
 - Responsive dashboard design
 - Maintainable feature-based architecture
+
+TODO:
+
+- Add response schemas for product endpoints
+- Add GetProductsResponse schema
+- Use response_model in FastAPI routers
+- Normalize is_active to boolean in API responses

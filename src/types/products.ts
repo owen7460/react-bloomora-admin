@@ -20,3 +20,22 @@ export interface GetProductsResponse {
   message: string;
   data: Product[];
 }
+
+export interface CreateProductPayload {
+  name: string;
+  sku: string;
+  description?: string | null;
+  category_id?: number | null;
+  price: number;
+  cost_price?: number | null;
+  stock_quantity: number;
+  low_stock_threshold: number;
+  unit: string;
+  image_url?: string | null;
+}
+
+export interface CreateProductResponse {
+  code: number;
+  message: string;
+  data: Product;
+}
