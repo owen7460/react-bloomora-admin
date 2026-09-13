@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import AddProductDialog from "@/components/AddProductDialog";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -30,6 +31,10 @@ export default function Products() {
 
   return (
     <>
+      <div className="flex justify-between items-center mb-4">
+        <p className="text-2xl font-bold text-primary">Inventory Products</p>
+        <AddProductDialog />
+      </div>
       <Table>
         <TableCaption>A list of your products inventory.</TableCaption>
         <TableHeader>

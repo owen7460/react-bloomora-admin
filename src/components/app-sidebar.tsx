@@ -17,13 +17,13 @@ import {
   GalleryVerticalEndIcon,
   AudioLinesIcon,
   TerminalIcon,
-  BotIcon,
   BookOpenIcon,
   Settings2Icon,
   FrameIcon,
   PieChartIcon,
   MapIcon,
   Flower,
+  ShoppingCartMinus,
 } from "lucide-react";
 
 // This is sample data.
@@ -35,9 +35,9 @@ const data = {
   },
   teams: [
     {
-      name: "Bloomora",
+      name: "Bloomora Team",
       logo: <GalleryVerticalEndIcon />,
-      plan: "Enterprise",
+      plan: "Florist Owner",
     },
     {
       name: "Acme Corp.",
@@ -62,30 +62,30 @@ const data = {
           url: "/dashboard/products",
         },
         {
-          title: "Starred",
+          title: "Unactive Products",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Upcomping Products",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Orders",
       url: "#",
-      icon: <BotIcon />,
+      icon: <ShoppingCartMinus />,
       items: [
         {
-          title: "Genesis",
+          title: "All Orders",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Pending Orders",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Completed Orders",
           url: "#",
         },
       ],
