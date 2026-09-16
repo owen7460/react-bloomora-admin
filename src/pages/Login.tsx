@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "@/apis/auth";
 
 export default function Login() {
@@ -34,13 +34,15 @@ export default function Login() {
     <div className="flex justify-center items-center h-screen bg-[url(/bg.jpg)] bg-cover bg-center">
       <Card className="w-full py-14 px-6 max-w-md bg-white/80 backdrop-blur-sm [--card-spacing:--spacing(8)]">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Welcome,</CardTitle>
+          <CardTitle className="text-2xl font-bold">Welcome back,</CardTitle>
           <CardTitle className="text-3xl font-bold">Bloomora Admin</CardTitle>
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
           <CardAction>
-            <Button variant="link">Sign Up</Button>
+            <Button variant="link">
+              <Link to="/signup">Sign Up</Link>
+            </Button>
           </CardAction>
         </CardHeader>
         <CardContent>

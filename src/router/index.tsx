@@ -4,11 +4,16 @@ import NotFound from "@/pages/NotFound";
 import Dashboard from "@/pages/Dashboard";
 import Products from "@/pages/Products";
 import Summary from "@/pages/Summary";
+import Signup from "@/pages/Signup";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
   },
   {
     path: "/dashboard",

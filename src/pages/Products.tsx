@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/table";
 import AddProductDialog from "@/components/AddProductDialog";
 import EditProductDialog from "@/components/EditProductDialog";
-import { toast } from "@/components/ui/toast";
+import { notifySuccess, notifyError } from "@/lib/toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,24 +44,12 @@ export default function Products() {
       const res = await deleteProduct(id);
       await loadProducts();
       console.log(res);
-      showToast(`${res.data.name} deleted successfully`);
+      notifySuccess(`${res.data.name} deleted successfully`);
     } catch (error) {
       console.error("delete product error", error);
+      notifyError("Failed to delete product");
     }
   };
-
-  function showToast(message: string) {
-    const id = toast.add({
-      title: "Inventory Management",
-      description: message,
-      actionProps: {
-        children: "OK",
-        onClick() {
-          toast.close(id);
-        },
-      },
-    });
-  }
 
   const handleEditProduct = (product: Product) => {
     setEditingProduct(product);
@@ -70,12 +58,12 @@ export default function Products() {
 
   const handleProductUpdated = async () => {
     await loadProducts();
-    showToast("Product updated successfully");
+    notifySuccess("Product updated successfully");
   };
 
   const handleProductCreated = async () => {
     await loadProducts();
-    showToast("Product added successfully");
+    notifySuccess("Product added successfully");
   };
 
   useEffect(() => {
