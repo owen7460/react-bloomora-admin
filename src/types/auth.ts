@@ -5,7 +5,7 @@ export interface LoginRequest{
 
 export interface TokenResponse{
   access_token: string;
-  refresh_token: string;
+  token_type: string;
 }
 
 export interface RegisterRequest{
@@ -15,5 +15,5 @@ export interface RegisterRequest{
 
 export interface RegisterResponse{
   id: string;
-  email: string;
+  email: number;
 }
