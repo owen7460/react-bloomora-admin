@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,24 +11,35 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { login } from "@/apis/auth";
+import { notifySuccess } from "@/lib/toast";
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
       const payload = await login({ email, password });
-
       localStorage.setItem("token", payload.access_token);
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (location.state?.registrationSuccess) {
+      notifySuccess("Sign up successful, please login to your account");
+      setSuccessMessage(true);
+      navigate(location.pathname, { replace: true, state: null });
+    }
+  }, [location.state?.registrationSuccess]);
 
   return (
     <div className="flex justify-center items-center h-screen bg-[url(/bg.jpg)] bg-cover bg-center">
@@ -44,9 +55,16 @@ export default function Login() {
               <Link to="/signup">Sign Up</Link>
             </Button>
           </CardAction>
-        </CardHeader>
-        <CardContent>
-          <form>
+        </CardHeader>{" "}
+        <form onSubmit={handleLogin}>
+          <CardContent>
+            {successMessage && (
+              <div className="flex flex-col gap-2 mb-6  ">
+                <p className="text-base text-green-700">
+                  Sign up successful, now you can login
+                </p>
+              </div>
+            )}
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -78,16 +96,16 @@ export default function Login() {
                 />
               </div>
             </div>
-          </form>
-        </CardContent>
-        <CardFooter className="flex-col mb-6 gap-4 bg-transparent">
-          <Button onClick={handleLogin} type="submit" className="w-full ">
-            Login
-          </Button>
-          <Button variant="outline" className="w-full">
-            Login with Google
-          </Button>
-        </CardFooter>
+          </CardContent>
+          <CardFooter className="flex-col mt-6 gap-4 bg-transparent">
+            <Button type="submit" className="w-full ">
+              Login
+            </Button>
+            <Button variant="outline" className="w-full">
+              Login with Google
+            </Button>
+          </CardFooter>
+        </form>
       </Card>
     </div>
   );

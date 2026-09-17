@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "@/apis/auth";
-import { notifySuccess, notifyError } from "@/lib/toast";
+import { notifyError } from "@/lib/toast";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -27,7 +27,8 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSignup = async () => {
+  const handleSignup = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (email === "") {
       notifyError("Email is required");
       return;
@@ -51,11 +52,7 @@ export default function Signup() {
     try {
       const payload = await register({ email, password });
       if (payload) {
-        notifySuccess("Sign up successful");
-
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 3000);
+        navigate("/", { state: { registrationSuccess: true } });
       } else {
         notifyError("Sign up failed");
       }
@@ -80,8 +77,8 @@ export default function Signup() {
             </Button>
           </CardAction>
         </CardHeader>
-        <CardContent>
-          <form>
+        <form onSubmit={handleSignup}>
+          <CardContent>
             <FieldSet className="w-full max-w-xs">
               <FieldGroup>
                 <Field>
@@ -131,13 +128,13 @@ export default function Signup() {
                 </Field>
               </FieldGroup>
             </FieldSet>
-          </form>
-        </CardContent>
-        <CardFooter className="flex-col mb-6 gap-4 bg-transparent">
-          <Button type="submit" className="w-full" onClick={handleSignup}>
-            Sign Up
-          </Button>
-        </CardFooter>
+          </CardContent>
+          <CardFooter className="flex-col mt-6 gap-4 bg-transparent">
+            <Button type="submit" className="w-full">
+              Sign Up
+            </Button>
+          </CardFooter>
+        </form>
       </Card>
     </div>
   );
