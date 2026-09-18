@@ -23,15 +23,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
+import PaginationComponent from "@/components/Pagination";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [editOpen, setEditOpen] = useState<boolean>(false);
 
-  const loadProducts = async () => {
+  const loadProducts = async (skip: number = 0, limit: number = 25) => {
     try {
-      const res = await getProducts();
+      const res = await getProducts(skip, limit);
       setProducts(res.data);
       console.log(res);
     } catch (error) {
@@ -64,6 +65,10 @@ export default function Products() {
   const handleProductCreated = async () => {
     await loadProducts();
     notifySuccess("Product added successfully");
+  };
+
+  const handlePageChange = async (skip: number, limit: number) => {
+    await loadProducts(skip, limit);
   };
 
   useEffect(() => {
@@ -152,6 +157,11 @@ export default function Products() {
           onProductUpdated={handleProductUpdated}
         />
       )}
+      <PaginationComponent
+        onPageChange={(skip: number, limit: number) =>
+          handlePageChange(skip, limit)
+        }
+      />
     </>
   );
 }

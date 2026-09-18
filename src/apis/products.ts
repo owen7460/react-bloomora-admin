@@ -7,8 +7,8 @@ import type { GetProductsResponse,
   DeleteProductResponse,
 } from "@/types/products";
 
-const getProducts = async (): Promise<GetProductsResponse> => {
-  const res = await http.get<GetProductsResponse>("/products");
+const getProducts = async (skip: number = 0, limit: number = 25): Promise<GetProductsResponse> => {
+  const res = await http.get<GetProductsResponse>(`/products?skip=${skip}&limit=${limit}`);
   return res.data;
 };
 
