@@ -21,6 +21,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ export default function Login() {
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
+      setLoginError(true);
     }
   };
 
@@ -62,6 +64,13 @@ export default function Login() {
               <div className="flex flex-col gap-2 mb-6  ">
                 <p className="text-base text-green-700">
                   Sign up successful, now you can login
+                </p>
+              </div>
+            )}
+            {loginError && (
+              <div className="flex flex-col gap-2 mb-6  ">
+                <p className="text-base text-red-700">
+                  Invalid email or password. Please try again.
                 </p>
               </div>
             )}
