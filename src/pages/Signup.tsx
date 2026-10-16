@@ -52,7 +52,7 @@ export default function Signup() {
     try {
       const payload = await register({ email, password });
       if (payload) {
-        navigate("/", { state: { registrationSuccess: true } });
+        navigate("/", { replace: true, state: { registrationSuccess: true } });
       } else {
         notifyError("Sign up failed");
       }

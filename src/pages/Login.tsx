@@ -20,11 +20,15 @@ export default function Login() {
   const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [successMessage, setSuccessMessage] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(
+    () => location.state?.registrationSuccess === true,
+  );
   const [loginError, setLoginError] = useState(false);
 
   const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSuccessMessage(false);
+    setLoginError(false);
     try {
       const payload = await login({ email, password });
       localStorage.setItem("token", payload.access_token);
@@ -36,12 +40,18 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (location.state?.registrationSuccess) {
-      notifySuccess("Sign up successful, please login to your account");
-      setSuccessMessage(true);
-      navigate(location.pathname, { replace: true, state: null });
-    }
-  }, [location.state?.registrationSuccess]);
+    if (location.state?.registrationSuccess !== true) return;
+
+    navigate(
+      {
+        pathname: location.pathname,
+        search: location.search,
+        hash: location.hash,
+      },
+      { replace: true, state: null },
+    );
+    notifySuccess("Sign up successful, please login to your account");
+  }, [location, navigate]);
 
   return (
     <div className="flex justify-center items-center h-screen bg-[url(/bg.jpg)] bg-cover bg-center">
