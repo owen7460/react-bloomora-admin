@@ -38,21 +38,24 @@ export default function AnnouncementCard() {
   return (
     <div className="w-75 bg-gray-100 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105">
       <h2 className="text-primary text-xl font-bold pb-2">Announcement 📣</h2>
-      {isLoading ? (
+      {isLoading && (
         <p className="text-sm text-gray-500">Loading announcement...</p>
-      ) : error ? (
+      )}
+      {!isLoading && error && (
         <p role="alert" className="text-sm text-gray-500">
           {error}
         </p>
-      ) : announcement ? (
+      )}
+      {!isLoading && !error && !announcement && (
+        <p className="text-sm text-gray-500">No announcements at the moment.</p>
+      )}
+      {!isLoading && !error && announcement && (
         <div>
           <h3 className="text-base pb-2">{announcement.title}</h3>
           <p className="text-sm text-gray-500 whitespace-pre-line">
             {announcement.content}
           </p>
         </div>
-      ) : (
-        <p className="text-sm text-gray-500">No announcements at the moment.</p>
       )}
     </div>
   );
