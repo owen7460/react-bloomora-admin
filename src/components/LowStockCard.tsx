@@ -29,8 +29,10 @@ export default function LowStockCard() {
         if (!cancelled) {
           setProducts(
             allProducts
-              .sort((a, b) => a.stock_quantity - b.stock_quantity || a.id - b.id)
-              .slice(0, 2),
+              .sort(
+                (a, b) => a.stock_quantity - b.stock_quantity || a.id - b.id,
+              )
+              .slice(0, 4),
           );
         }
       } catch {
@@ -53,12 +55,16 @@ export default function LowStockCard() {
 
   return (
     <div className="w-75 bg-gray-100 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105">
-      <h2 className="text-primary text-2xl font-bold pb-2">Stock Alert 📦</h2>
-      <p className="text-sm text-gray-500 pb-4">2 products with the lowest stock</p>
+      <h2 className="text-primary text-xl font-bold pb-2">Stock Alert 📦</h2>
+      <p className="text-sm text-gray-500 pb-4">
+        4 products with the lowest stock
+      </p>
       {isLoading ? (
         <p className="text-sm text-gray-500">Loading stock levels...</p>
       ) : error ? (
-        <p role="alert" className="text-sm text-gray-500">{error}</p>
+        <p role="alert" className="text-sm text-gray-500">
+          {error}
+        </p>
       ) : products.length > 0 ? (
         <ol className="space-y-4">
           {products.map((product) => (
@@ -71,11 +77,13 @@ export default function LowStockCard() {
               <p className="text-sm text-gray-500">
                 Alert level: {product.low_stock_threshold} {product.unit}
               </p>
-              <p className={`text-sm font-medium ${
-                product.stock_quantity <= product.low_stock_threshold
-                  ? "text-red-600"
-                  : "text-green-700"
-              }`}>
+              <p
+                className={`text-sm font-medium ${
+                  product.stock_quantity <= product.low_stock_threshold
+                    ? "text-red-600"
+                    : "text-green-700"
+                }`}
+              >
                 {product.stock_quantity <= 0
                   ? "Out of stock"
                   : product.stock_quantity <= product.low_stock_threshold

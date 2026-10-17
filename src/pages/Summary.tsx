@@ -1,5 +1,6 @@
 import AnnouncementCard from "@/components/AnnouncementCard";
 import LowStockCard from "@/components/LowStockCard";
+import UpcomingEventsCard from "@/components/UpcomingEventsCard";
 
 export default function Summary() {
   return (
@@ -10,6 +11,7 @@ export default function Summary() {
       <div className="flex flex-wrap items-stretch gap-6 p-4">
         <AnnouncementCard />
         <LowStockCard />
+        <UpcomingEventsCard />
       </div>
     </div>
   );
