@@ -1,4 +1,5 @@
 import AnnouncementCard from "@/components/AnnouncementCard";
+import LowStockCard from "@/components/LowStockCard";
 
 export default function Summary() {
   return (
@@ -6,8 +7,9 @@ export default function Summary() {
       <h1 className=" text-left p-8 text-4xl font-bold text-primary">
         Welcome to the dashboard, Bloomora Admin
       </h1>
-      <div className="p-4">
+      <div className="flex flex-wrap items-stretch gap-6 p-4">
         <AnnouncementCard />
+        <LowStockCard />
       </div>
     </div>
   );
