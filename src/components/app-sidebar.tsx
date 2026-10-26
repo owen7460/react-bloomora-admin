@@ -62,14 +62,14 @@ const data = {
           title: "Today Summary",
           url: "/dashboard",
         },
-        // {
-        //   title: "This Week Summary",
-        //   url: "#",
-        // },
-        // {
-        //   title: "This Month Summary",
-        //   url: "#",
-        // },
+        {
+          title: "Weekly Summary",
+          url: "#",
+        },
+        {
+          title: "Monthly Summary",
+          url: "#",
+        },
       ],
     },
     {
