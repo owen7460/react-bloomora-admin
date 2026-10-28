@@ -13,7 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { login } from "@/apis/auth";
-import { notifySuccess } from "@/lib/toast";
+import { notifyError, notifySuccess } from "@/lib/toast";
+import { loginSchema } from "@/schemas/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -29,8 +30,13 @@ export default function Login() {
     e.preventDefault();
     setSuccessMessage(false);
     setLoginError(false);
+    const result = loginSchema.safeParse({ email, password });
+    if (!result.success) {
+      notifyError(result.error.issues[0].message);
+      return;
+    }
     try {
-      const payload = await login({ email, password });
+      const payload = await login(result.data);
       localStorage.setItem("token", payload.access_token);
       navigate("/dashboard");
     } catch (error) {

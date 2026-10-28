@@ -1,19 +1,19 @@
-export interface LoginRequest{
+export interface LoginRequest {
   email: string;
   password: string;
 }
 
-export interface TokenResponse{
+export interface TokenResponse {
   access_token: string;
   token_type: string;
 }
 
-export interface RegisterRequest{
+export interface RegisterRequest {
   email: string;
   password: string;
 }
 
-export interface RegisterResponse{
+export interface RegisterResponse {
   id: string;
-  email: number;
+  email: string;
 }

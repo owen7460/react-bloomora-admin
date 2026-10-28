@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "@/apis/auth";
 import { notifyError } from "@/lib/toast";
+import { signupSchema } from "@/schemas/auth";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -29,28 +30,16 @@ export default function Signup() {
 
   const handleSignup = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email === "") {
-      notifyError("Email is required");
-      return;
-    }
-    if (password === "") {
-      notifyError("Password is required");
-      return;
-    }
-    if (confirmPassword === "") {
-      notifyError("Confirm password is required");
-      return;
-    }
-    if (password !== confirmPassword) {
-      notifyError("Passwords do not match");
-      return;
-    }
-    if (password.length < 8) {
-      notifyError("Password must be at least 8 characters");
+    const result = signupSchema.safeParse({ email, password, confirmPassword });
+    if (!result.success) {
+      notifyError(result.error.issues[0].message);
       return;
     }
     try {
-      const payload = await register({ email, password });
+      const payload = await register({
+        email: result.data.email,
+        password: result.data.password,
+      });
       if (payload) {
         navigate("/", { replace: true, state: { registrationSuccess: true } });
       } else {
