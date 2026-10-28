@@ -37,16 +37,32 @@ export default function PaginationComponent({
           </SelectTrigger>
           <SelectContent align="start">
             <SelectGroup>
-              <SelectItem value="10" onClick={() => onPageChange(1, 10)}>
+              <SelectItem
+                className="text-primary"
+                value="10"
+                onClick={() => onPageChange(1, 10)}
+              >
                 10
               </SelectItem>
-              <SelectItem value="25" onClick={() => onPageChange(1, 25)}>
+              <SelectItem
+                className="text-primary"
+                value="25"
+                onClick={() => onPageChange(1, 25)}
+              >
                 25
               </SelectItem>
-              <SelectItem value="50" onClick={() => onPageChange(1, 50)}>
+              <SelectItem
+                className="text-primary"
+                value="50"
+                onClick={() => onPageChange(1, 50)}
+              >
                 50
               </SelectItem>
-              <SelectItem value="100" onClick={() => onPageChange(1, 100)}>
+              <SelectItem
+                className="text-primary"
+                value="100"
+                onClick={() => onPageChange(1, 100)}
+              >
                 100
               </SelectItem>
             </SelectGroup>
