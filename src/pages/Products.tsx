@@ -29,10 +29,12 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(25);
 
-  const loadProducts = async (skip: number = 0, limit: number = 25) => {
+  const loadProducts = async (page: number, pageSize: number) => {
     try {
-      const res = await getProducts(skip, limit);
+      const res = await getProducts(page, pageSize);
       setProducts(res.data);
       console.log(res);
     } catch (error) {
@@ -43,7 +45,7 @@ export default function Products() {
   const handleDeleteProduct = async (id: number) => {
     try {
       const res = await deleteProduct(id);
-      await loadProducts();
+      await loadProducts(page, pageSize);
       console.log(res);
       notifySuccess(`${res.data.name} deleted successfully`);
     } catch (error) {
@@ -58,23 +60,24 @@ export default function Products() {
   };
 
   const handleProductUpdated = async () => {
-    await loadProducts();
+    await loadProducts(page, pageSize);
     notifySuccess("Product updated successfully");
   };
 
   const handleProductCreated = async () => {
-    await loadProducts();
+    await loadProducts(page, pageSize);
     notifySuccess("Product added successfully");
   };
 
-  const handlePageChange = async (skip: number, limit: number) => {
-    await loadProducts(skip, limit);
+  const handlePageChange = (page: number, pageSize: number) => {
+    setPage(page);
+    setPageSize(pageSize);
   };
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    loadProducts();
-  }, []);
+    loadProducts(page, pageSize);
+  }, [page, pageSize]);
 
   return (
     <>
@@ -87,9 +90,7 @@ export default function Products() {
         <TableHeader>
           <TableRow>
             <TableHead className="text-primary">#</TableHead>
-            <TableHead className="w-[150px] text-primary">
-              Product Name
-            </TableHead>
+            <TableHead className="w-37.5 text-primary">Product Name</TableHead>
             <TableHead className="text-primary">SKU</TableHead>
             <TableHead className="text-primary">Price</TableHead>
             <TableHead className="text-primary">Status</TableHead>
@@ -159,9 +160,9 @@ export default function Products() {
         />
       )}
       <PaginationComponent
-        onPageChange={(skip: number, limit: number) =>
-          handlePageChange(skip, limit)
-        }
+        page={page}
+        pageSize={pageSize}
+        onPageChange={handlePageChange}
       />
     </>
   );

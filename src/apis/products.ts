@@ -1,5 +1,6 @@
 import http from "@/apis/client";
-import type { GetProductsResponse,
+import type {
+  GetProductsResponse,
   CreateProductPayload,
   CreateProductResponse,
   UpdateProductPayload,
@@ -7,18 +8,31 @@ import type { GetProductsResponse,
   DeleteProductResponse,
 } from "@/types/products";
 
-const getProducts = async (skip: number = 0, limit: number = 25): Promise<GetProductsResponse> => {
-  const res = await http.get<GetProductsResponse>(`/products?skip=${skip}&limit=${limit}`);
+const getProducts = async (
+  page: number = 1,
+  pageSize: number = 25,
+): Promise<GetProductsResponse> => {
+  const res = await http.get<GetProductsResponse>(
+    `/products?page=${page}&pageSize=${pageSize}`,
+  );
   return res.data;
 };
 
-const createProduct = async (payload: CreateProductPayload): Promise<CreateProductResponse> => {
+const createProduct = async (
+  payload: CreateProductPayload,
+): Promise<CreateProductResponse> => {
   const res = await http.post<CreateProductResponse>("/products", payload);
   return res.data;
 };
 
-const updateProduct = async (id: number, payload: UpdateProductPayload): Promise<UpdateProductResponse> => {
-  const res = await http.patch<UpdateProductResponse>(`/products/${id}`, payload);
+const updateProduct = async (
+  id: number,
+  payload: UpdateProductPayload,
+): Promise<UpdateProductResponse> => {
+  const res = await http.patch<UpdateProductResponse>(
+    `/products/${id}`,
+    payload,
+  );
   return res.data;
 };
 

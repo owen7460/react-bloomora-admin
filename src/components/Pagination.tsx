@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Field, FieldLabel } from "@/components/ui/field";
 import {
   Pagination,
@@ -17,40 +16,37 @@ import {
 } from "@/components/ui/select";
 
 interface PaginationComponentProps {
-  onPageChange: (skip: number, limit: number) => void;
+  page: number;
+  pageSize: number;
+  onPageChange: (page: number, pageSize: number) => void;
 }
 
 export default function PaginationComponent({
+  page,
+  pageSize,
   onPageChange,
 }: PaginationComponentProps) {
-  const [skip, setSkip] = useState(0);
-  const [limit, setLimit] = useState(25);
-  const handlePageChange = (skip: number, limit: number) => {
-    setSkip(skip);
-    setLimit(limit);
-    onPageChange(skip, limit);
-  };
-
+  const isFirstPage = page <= 1;
   return (
     <div className="flex items-center justify-between gap-4">
       <Field orientation="horizontal" className="w-fit">
         <FieldLabel htmlFor="select-rows-per-page">Rows per page</FieldLabel>
-        <Select defaultValue="25">
+        <Select defaultValue={pageSize.toString()}>
           <SelectTrigger className="w-20" id="select-rows-per-page">
             <SelectValue />
           </SelectTrigger>
           <SelectContent align="start">
             <SelectGroup>
-              <SelectItem onClick={() => handlePageChange(0, 10)} value="10">
+              <SelectItem value="10" onClick={() => onPageChange(1, 10)}>
                 10
               </SelectItem>
-              <SelectItem onClick={() => handlePageChange(0, 25)} value="25">
+              <SelectItem value="25" onClick={() => onPageChange(1, 25)}>
                 25
               </SelectItem>
-              <SelectItem onClick={() => handlePageChange(0, 50)} value="50">
+              <SelectItem value="50" onClick={() => onPageChange(1, 50)}>
                 50
               </SelectItem>
-              <SelectItem onClick={() => handlePageChange(0, 100)} value="100">
+              <SelectItem value="100" onClick={() => onPageChange(1, 100)}>
                 100
               </SelectItem>
             </SelectGroup>
@@ -61,13 +57,17 @@ export default function PaginationComponent({
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              onClick={() => handlePageChange(Math.max(0, skip - limit), limit)}
+              className={
+                isFirstPage ? "pointer-events-none opacity-50" : undefined
+              }
+              onClick={() => onPageChange(page - 1, pageSize)}
             />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext
-              onClick={() => handlePageChange(skip + limit, limit)}
-            />
+            <span className="text-sm text-primary">Page {page}</span>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext onClick={() => onPageChange(page + 1, pageSize)} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
