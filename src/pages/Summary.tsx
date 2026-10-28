@@ -7,7 +7,13 @@ export default function Summary() {
   return (
     <div className="h-screen w-full">
       <h1 className=" text-left p-8 text-4xl font-bold text-primary">
-        Welcome to the dashboard, Bloomora Admin
+        Welcome to the dashboard, Bloomora Admin{" - "}
+        {new Date().toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
       </h1>
       <div className="flex flex-wrap items-stretch gap-6 p-4">
         <AnnouncementCard />
