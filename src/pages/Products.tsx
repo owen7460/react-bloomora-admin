@@ -25,12 +25,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
 import PaginationComponent from "@/components/Pagination";
+import { ShimmerMarker } from "@/components/Shimmer";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(25);
+  const [reloadKey, setReloadKey] = useState<number>(0);
+
+  const reloadProducts = () => setReloadKey((key) => key + 1);
 
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [viewingProduct, setViewingProduct] = useState<Product | null>(null);
@@ -38,20 +44,10 @@ export default function Products() {
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const [viewOpen, setViewOpen] = useState<boolean>(false);
 
-  const loadProducts = async (page: number, pageSize: number) => {
-    try {
-      const res = await getProducts(page, pageSize);
-      setProducts(res.data);
-      console.log(res);
-    } catch (error) {
-      console.error("fetch products error", error);
-    }
-  };
-
   const handleDeleteProduct = async (id: number) => {
     try {
       const res = await deleteProduct(id);
-      await loadProducts(page, pageSize);
+      reloadProducts();
       console.log(res);
       notifySuccess(`${res.data.name} deleted successfully`);
     } catch (error) {
@@ -74,7 +70,7 @@ export default function Products() {
     if (!editingProduct) return;
     try {
       await updateProduct(editingProduct.id, payload);
-      await loadProducts(page, pageSize);
+      reloadProducts();
       notifySuccess("Product updated successfully");
     } catch (error) {
       console.error("update product error", error);
@@ -84,7 +80,7 @@ export default function Products() {
   };
 
   const handleProductCreated = async () => {
-    await loadProducts(page, pageSize);
+    reloadProducts();
     notifySuccess("Product added successfully");
   };
 
@@ -94,9 +90,46 @@ export default function Products() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    loadProducts(page, pageSize);
-  }, [page, pageSize]);
+    let ignore = false;
+
+    async function loadProducts() {
+      setLoading(true);
+      setError(null);
+      setProducts([]);
+
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        const res = await getProducts(page, pageSize);
+        if (res.code !== 200) {
+          throw new Error(`fetch products failed: ${res.message}`);
+        }
+        if (!ignore) {
+          setProducts(res.data);
+        }
+      } catch (error) {
+        if (!ignore) {
+          setError(error instanceof Error ? error.message : String(error));
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    }
+    loadProducts();
+
+    return () => {
+      ignore = true;
+    };
+  }, [page, pageSize, reloadKey]);
+
+  if (loading) {
+    return <ShimmerMarker />;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
