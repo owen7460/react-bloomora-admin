@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import type { Product } from "@/types/products";
-import { getProducts, deleteProduct } from "@/apis/products";
+import type { Product, UpdateProductPayload } from "@/types/products";
+import { getProducts, deleteProduct, updateProduct } from "@/apis/products";
 import {
   Table,
   TableBody,
@@ -28,12 +28,15 @@ import PaginationComponent from "@/components/Pagination";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [viewingProduct, setViewingProduct] = useState<Product | null>(null);
-  const [editOpen, setEditOpen] = useState<boolean>(false);
-  const [viewOpen, setViewOpen] = useState<boolean>(false);
+
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(25);
+
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [viewingProduct, setViewingProduct] = useState<Product | null>(null);
+
+  const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [viewOpen, setViewOpen] = useState<boolean>(false);
 
   const loadProducts = async (page: number, pageSize: number) => {
     try {
@@ -67,9 +70,17 @@ export default function Products() {
     setViewOpen(true);
   };
 
-  const handleProductUpdated = async () => {
-    await loadProducts(page, pageSize);
-    notifySuccess("Product updated successfully");
+  const handleUpdateProduct = async (payload: UpdateProductPayload) => {
+    if (!editingProduct) return;
+    try {
+      await updateProduct(editingProduct.id, payload);
+      await loadProducts(page, pageSize);
+      notifySuccess("Product updated successfully");
+    } catch (error) {
+      console.error("update product error", error);
+      notifyError("Failed to update product");
+      throw error;
+    }
   };
 
   const handleProductCreated = async () => {
@@ -169,7 +180,7 @@ export default function Products() {
           open={editOpen}
           onOpenChange={setEditOpen}
           editingProduct={editingProduct}
-          onProductUpdated={handleProductUpdated}
+          onSubmit={handleUpdateProduct}
         />
       )}
       {viewingProduct && (

@@ -13,21 +13,20 @@ import {
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { updateProduct } from "@/apis/products";
-import type { Product } from "@/types/products";
+import type { Product, UpdateProductPayload } from "@/types/products";
 
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   editingProduct: Product;
-  onProductUpdated: () => Promise<void>;
+  onSubmit: (payload: UpdateProductPayload) => Promise<void>;
 };
 
 export default function EditProductDialog({
   open,
   onOpenChange,
   editingProduct,
-  onProductUpdated,
+  onSubmit,
 }: Props) {
   const [name, setName] = useState(editingProduct.name);
   const [sku, setSku] = useState(editingProduct.sku);
@@ -39,30 +38,26 @@ export default function EditProductDialog({
     onOpenChange(open);
   };
 
-  const handleUpdateProduct = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const payload = {
+      await onSubmit({
         name,
         sku,
         price,
         stock_quantity: stockQuantity,
-      };
-      const res = await updateProduct(editingProduct.id, payload);
-      console.log(res);
-      await onProductUpdated();
-
+      });
       handleOpenChange(false);
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // keep the dialog open so the user can retry; the parent shows the error
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-lg">
-        <form onSubmit={handleUpdateProduct}>
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-primary text-2xl font-bold">
               Edit Product
