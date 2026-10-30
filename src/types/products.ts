@@ -15,6 +15,12 @@ export interface Product {
   updated_at: string;
 }
 
+export interface GetProductResponse {
+  code: number;
+  message: string;
+  data: Product;
+}
+
 export interface GetProductsResponse {
   code: number;
   message: string;
@@ -44,6 +50,7 @@ export interface UpdateProductPayload {
   name?: string;
   sku?: string;
   price?: number;
+  stock_quantity?: number;
 }
 
 export interface UpdateProductResponse {

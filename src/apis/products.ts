@@ -6,7 +6,13 @@ import type {
   UpdateProductPayload,
   UpdateProductResponse,
   DeleteProductResponse,
+  GetProductResponse,
 } from "@/types/products";
+
+const getProduct = async (id: number): Promise<GetProductResponse> => {
+  const res = await http.get<GetProductResponse>(`/products/${id}`);
+  return res.data;
+};
 
 const getProducts = async (
   page: number = 1,
@@ -41,4 +47,4 @@ const deleteProduct = async (id: number): Promise<DeleteProductResponse> => {
   return res.data;
 };
 
-export { getProducts, createProduct, updateProduct, deleteProduct };
+export { getProduct, getProducts, createProduct, updateProduct, deleteProduct };

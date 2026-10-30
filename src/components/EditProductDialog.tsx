@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,20 +19,22 @@ import type { Product } from "@/types/products";
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  product: Product;
+  editingProduct: Product;
   onProductUpdated: () => Promise<void>;
 };
 
 export default function EditProductDialog({
   open,
   onOpenChange,
-  product,
+  editingProduct,
   onProductUpdated,
 }: Props) {
-  const [name, setName] = useState("");
-  const [sku, setSku] = useState("");
-  const [price, setPrice] = useState(0);
-
+  const [name, setName] = useState(editingProduct.name);
+  const [sku, setSku] = useState(editingProduct.sku);
+  const [price, setPrice] = useState(editingProduct.price);
+  const [stockQuantity, setStockQuantity] = useState(
+    editingProduct.stock_quantity,
+  );
   const handleOpenChange = (open: boolean) => {
     onOpenChange(open);
   };
@@ -45,29 +47,17 @@ export default function EditProductDialog({
         name,
         sku,
         price,
-        stock_quantity: 0,
-        low_stock_threshold: 0,
-        unit: "item",
+        stock_quantity: stockQuantity,
       };
-      const res = await updateProduct(product.id, payload);
+      const res = await updateProduct(editingProduct.id, payload);
       console.log(res);
       await onProductUpdated();
-
-      setName("");
-      setSku("");
-      setPrice(0);
 
       handleOpenChange(false);
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    setName(product.name);
-    setSku(product.sku);
-    setPrice(product.price);
-  }, [product]);
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -109,10 +99,19 @@ export default function EditProductDialog({
               </FieldDescription>
             </Field>
             <div className="grid grid-cols-2 gap-4">
-              {/* <Field>
-                <Label htmlFor="cost-price">Cost Price</Label>
-                <Input id="cost-price" type="number" placeholder="$0.00" />
-              </Field> */}
+              <Field>
+                <Label htmlFor="stock-quantity">Stock Quantity</Label>
+                <Input
+                  id="stock-quantity"
+                  type="number"
+                  placeholder="0"
+                  value={stockQuantity}
+                  onChange={(e) => setStockQuantity(Number(e.target.value))}
+                />
+                <FieldDescription>
+                  Please enter the stock quantity.
+                </FieldDescription>
+              </Field>
               <Field>
                 <Label htmlFor="price">* Selling Price</Label>
                 <Input
@@ -125,6 +124,9 @@ export default function EditProductDialog({
                   value={price}
                   onChange={(e) => setPrice(Number(e.target.value))}
                 />
+                <FieldDescription>
+                  Please enter the selling price.
+                </FieldDescription>
               </Field>
             </div>
           </FieldGroup>

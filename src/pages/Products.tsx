@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import AddProductDialog from "@/components/AddProductDialog";
 import EditProductDialog from "@/components/EditProductDialog";
+import ViewProductDialog from "@/components/ViewProductDialog";
 import { notifySuccess, notifyError } from "@/lib/toast";
 import {
   DropdownMenu,
@@ -28,7 +29,9 @@ import PaginationComponent from "@/components/Pagination";
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [viewingProduct, setViewingProduct] = useState<Product | null>(null);
   const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [viewOpen, setViewOpen] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(25);
 
@@ -54,9 +57,14 @@ export default function Products() {
     }
   };
 
-  const handleEditProduct = (product: Product) => {
-    setEditingProduct(product);
+  const handleEditProduct = (editingProduct: Product) => {
+    setEditingProduct(editingProduct);
     setEditOpen(true);
+  };
+
+  const handleViewProduct = (product: Product) => {
+    setViewingProduct(product);
+    setViewOpen(true);
   };
 
   const handleProductUpdated = async () => {
@@ -125,7 +133,11 @@ export default function Products() {
                     >
                       Edit
                     </DropdownMenuItem>
-                    <DropdownMenuItem>View</DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleViewProduct(product)}
+                    >
+                      View
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       variant="destructive"
@@ -153,10 +165,19 @@ export default function Products() {
       </Table>
       {editingProduct && (
         <EditProductDialog
+          key={editingProduct.id}
           open={editOpen}
           onOpenChange={setEditOpen}
-          product={editingProduct}
+          editingProduct={editingProduct}
           onProductUpdated={handleProductUpdated}
+        />
+      )}
+      {viewingProduct && (
+        <ViewProductDialog
+          key={viewingProduct.id}
+          open={viewOpen}
+          onOpenChange={setViewOpen}
+          viewingProduct={viewingProduct}
         />
       )}
       <PaginationComponent
