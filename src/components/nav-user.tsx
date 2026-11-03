@@ -23,6 +23,8 @@ import {
   LogOutIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/store/hooks";
+import { clearEmail as clearEmailAction } from "@/store/slices/authSlice";
 
 export function NavUser({
   user,
@@ -35,8 +37,10 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const handleLogout = () => {
     localStorage.removeItem("token");
+    dispatch(clearEmailAction());
     navigate("/");
   };
   return (

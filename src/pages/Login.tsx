@@ -15,6 +15,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { login } from "@/apis/auth";
 import { notifyError, notifySuccess } from "@/lib/toast";
 import { loginSchema } from "@/schemas/auth";
+import { useAppDispatch } from "@/store/hooks";
+import { setEmail as setEmailAction } from "@/store/slices/authSlice";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ export default function Login() {
     () => location.state?.registrationSuccess === true,
   );
   const [loginError, setLoginError] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,6 +41,7 @@ export default function Login() {
     try {
       const payload = await login(result.data);
       localStorage.setItem("token", payload.access_token);
+      dispatch(setEmailAction(result.data.email));
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
