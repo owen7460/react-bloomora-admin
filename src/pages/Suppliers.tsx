@@ -89,6 +89,10 @@ export default function Suppliers() {
     setPageSize(pageSize);
   };
 
+  const handleSupplierClick = (supplier: Supplier) => {
+    console.log(supplier);
+  };
+
   useEffect(() => {
     let ignore = false;
 
@@ -153,7 +157,10 @@ export default function Suppliers() {
         </TableHeader>
         <TableBody>
           {suppliers.map((supplier, index) => (
-            <TableRow key={supplier.id}>
+            <TableRow
+              key={supplier.id}
+              onClick={() => handleSupplierClick(supplier)}
+            >
               <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell className="font-medium">{supplier.name}</TableCell>
               <TableCell>{supplier.email}</TableCell>
@@ -162,12 +169,14 @@ export default function Suppliers() {
               <TableCell>
                 {supplier.is_active ? "Active" : "Inactive"}
               </TableCell>
-              <TableCell>{supplier.note}</TableCell>
-              <TableCell>
-                {new Date(supplier.created_at).toLocaleString()}
+              <TableCell className="max-w-64 truncate">
+                {supplier.note}
               </TableCell>
               <TableCell>
-                {new Date(supplier.updated_at).toLocaleString()}
+                {new Date(supplier.created_at).toLocaleDateString("en-ca")}
+              </TableCell>
+              <TableCell>
+                {new Date(supplier.updated_at).toLocaleDateString("en-ca")}
               </TableCell>
             </TableRow>
           ))}
@@ -179,23 +188,6 @@ export default function Suppliers() {
           </TableRow>
         </TableFooter>
       </Table>
-      {/* {editingProduct && (
-        <EditProductDialog
-          key={editingProduct.id}
-          open={editOpen}
-          onOpenChange={setEditOpen}
-          editingProduct={editingProduct}
-          onSubmit={handleUpdateProduct}
-        />
-      )}
-      {viewingProduct && (
-        <ViewProductDialog
-          key={viewingProduct.id}
-          open={viewOpen}
-          onOpenChange={setViewOpen}
-          viewingProduct={viewingProduct}
-        />
-      )} */}
       <PaginationComponent
         page={page}
         pageSize={pageSize}
