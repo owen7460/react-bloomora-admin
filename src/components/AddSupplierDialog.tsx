@@ -14,15 +14,15 @@ import {
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createSupplier } from "@/apis/suppliers";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import type { CreateSupplierPayload } from "@/types/suppliers";
 
 type Props = {
-  onSupplierCreated: () => Promise<void>;
+  onSubmit: (payload: CreateSupplierPayload) => Promise<void>;
 };
 
-export default function AddSupplierDialog({ onSupplierCreated }: Props) {
+export default function AddSupplierDialog({ onSubmit }: Props) {
   const [open, setOpen] = useState<boolean>(false);
 
   const [name, setName] = useState("");
@@ -36,32 +36,31 @@ export default function AddSupplierDialog({ onSupplierCreated }: Props) {
     setOpen(open);
   };
 
-  const handleAddSupplier = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setContactName("");
+    setIsActive(true);
+    setNote("");
+  };
+
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const payload = {
+      await onSubmit({
         name,
         email,
         phone,
         contact_name: contactName,
         is_active: isActive,
         note,
-      };
-      const res = await createSupplier(payload);
-      console.log(res);
-      await onSupplierCreated();
-
-      setName("");
-      setEmail("");
-      setPhone("");
-      setContactName("");
-      setIsActive(true);
-      setNote("");
-
+      });
+      resetForm();
       handleOpenChange(false);
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // keep the dialog open so the user can retry; the parent shows the error
     }
   };
   return (
@@ -78,7 +77,7 @@ export default function AddSupplierDialog({ onSupplierCreated }: Props) {
         }
       />
       <DialogContent className="sm:max-w-lg">
-        <form onSubmit={handleAddSupplier}>
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-primary text-2xl font-bold">
               Add New Supplier
@@ -107,7 +106,7 @@ export default function AddSupplierDialog({ onSupplierCreated }: Props) {
               <Input
                 id="email"
                 name="email"
-                type="text"
+                type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -155,7 +154,7 @@ export default function AddSupplierDialog({ onSupplierCreated }: Props) {
                 <Switch
                   id="is-active"
                   checked={isActive}
-                  onCheckedChange={(checked) => setIsActive(Boolean(checked))}
+                  onCheckedChange={(checked) => setIsActive(checked)}
                 />
                 <Label htmlFor="is-active">
                   {isActive ? "Active" : "Inactive"}

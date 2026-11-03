@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import type { Supplier } from "@/types/suppliers";
-import { getSuppliers } from "@/apis/suppliers";
+import type { Supplier, CreateSupplierPayload } from "@/types/suppliers";
+import { getSuppliers, createSupplier } from "@/apis/suppliers";
 import {
   Table,
   TableBody,
@@ -79,9 +79,16 @@ export default function Suppliers() {
   //   }
   // };
 
-  const handleSupplierCreated = async () => {
-    reloadSuppliers();
-    notifySuccess("Supplier added successfully");
+  const handleCreateSupplier = async (payload: CreateSupplierPayload) => {
+    try {
+      await createSupplier(payload);
+      reloadSuppliers();
+      notifySuccess("Supplier added successfully");
+    } catch (error) {
+      console.error("create supplier error", error);
+      notifyError("Failed to add supplier");
+      throw error;
+    }
   };
 
   const handlePageChange = (page: number, pageSize: number) => {
@@ -138,7 +145,7 @@ export default function Suppliers() {
     <>
       <div className="flex justify-between items-center mb-4">
         <p className="text-2xl font-bold text-primary">Suppliers</p>
-        <AddSupplierDialog onSupplierCreated={handleSupplierCreated} />
+        <AddSupplierDialog onSubmit={handleCreateSupplier} />
       </div>
       <Table>
         <TableCaption>A list of your suppliers.</TableCaption>
