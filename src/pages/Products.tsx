@@ -98,7 +98,6 @@ export default function Products() {
       setProducts([]);
 
       try {
-        await new Promise((resolve) => setTimeout(resolve, 5000));
         const res = await getProducts(page, pageSize);
         if (res.code !== 200) {
           throw new Error(`fetch products failed: ${res.message}`);

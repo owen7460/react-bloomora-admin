@@ -26,6 +26,7 @@ import {
   ShoppingCartMinus,
   NotepadText,
   UsersRound,
+  TruckIcon,
 } from "lucide-react";
 
 // This is sample data.
@@ -106,6 +107,25 @@ const data = {
         },
         {
           title: "Completed Orders",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Suppliers",
+      url: "#",
+      icon: <TruckIcon />,
+      items: [
+        {
+          title: "All Suppliers",
+          url: "/dashboard/suppliers",
+        },
+        {
+          title: "Active Suppliers",
+          url: "#",
+        },
+        {
+          title: "Inactive Suppliers",
           url: "#",
         },
       ],
