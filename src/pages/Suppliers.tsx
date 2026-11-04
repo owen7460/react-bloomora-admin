@@ -143,63 +143,67 @@ export default function Suppliers() {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
-        <p className="text-2xl font-bold text-primary">Suppliers</p>
-        <AddSupplierDialog onSubmit={handleCreateSupplier} />
-      </div>
-      <Table>
-        <TableCaption>A list of your suppliers.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="text-primary">#</TableHead>
-            <TableHead className="w-37.5 text-primary">Supplier Name</TableHead>
-            <TableHead className="text-primary">Email</TableHead>
-            <TableHead className="text-primary">Phone</TableHead>
-            <TableHead className="text-primary">Contact Name</TableHead>
-            <TableHead className="text-primary">Status</TableHead>
-            <TableHead className="text-primary">Note</TableHead>
-            <TableHead className="text-primary">Created At</TableHead>
-            <TableHead className="text-primary">Updated At</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {suppliers.map((supplier, index) => (
-            <TableRow
-              key={supplier.id}
-              onClick={() => handleSupplierClick(supplier)}
-            >
-              <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell className="font-medium">{supplier.name}</TableCell>
-              <TableCell>{supplier.email}</TableCell>
-              <TableCell>{supplier.phone}</TableCell>
-              <TableCell>{supplier.contact_name}</TableCell>
-              <TableCell>
-                {supplier.is_active ? "Active" : "Inactive"}
-              </TableCell>
-              <TableCell className="max-w-64 truncate">
-                {supplier.note}
-              </TableCell>
-              <TableCell>
-                {new Date(supplier.created_at).toLocaleDateString("en-ca")}
-              </TableCell>
-              <TableCell>
-                {new Date(supplier.updated_at).toLocaleDateString("en-ca")}
-              </TableCell>
+      <div className="bg-white/80 backdrop-blur-xl border border-white/30 shadow-lg p-6 rounded-lg">
+        <div className="flex justify-between items-center mb-4">
+          <p className="text-2xl font-bold text-primary">Suppliers</p>
+          <AddSupplierDialog onSubmit={handleCreateSupplier} />
+        </div>
+        <Table>
+          <TableCaption>A list of your suppliers.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-primary">#</TableHead>
+              <TableHead className="w-37.5 text-primary">
+                Supplier Name
+              </TableHead>
+              <TableHead className="text-primary">Email</TableHead>
+              <TableHead className="text-primary">Phone</TableHead>
+              <TableHead className="text-primary">Contact Name</TableHead>
+              <TableHead className="text-primary">Status</TableHead>
+              <TableHead className="text-primary">Note</TableHead>
+              <TableHead className="text-primary">Created At</TableHead>
+              <TableHead className="text-primary">Updated At</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={0}>Total:</TableCell>
-            <TableCell>{suppliers.length}</TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
-      <PaginationComponent
-        page={page}
-        pageSize={pageSize}
-        onPageChange={handlePageChange}
-      />
+          </TableHeader>
+          <TableBody>
+            {suppliers.map((supplier, index) => (
+              <TableRow
+                key={supplier.id}
+                onClick={() => handleSupplierClick(supplier)}
+              >
+                <TableCell className="font-medium">{index + 1}</TableCell>
+                <TableCell className="font-medium">{supplier.name}</TableCell>
+                <TableCell>{supplier.email}</TableCell>
+                <TableCell>{supplier.phone}</TableCell>
+                <TableCell>{supplier.contact_name}</TableCell>
+                <TableCell>
+                  {supplier.is_active ? "Active" : "Inactive"}
+                </TableCell>
+                <TableCell className="max-w-64 truncate">
+                  {supplier.note}
+                </TableCell>
+                <TableCell>
+                  {new Date(supplier.created_at).toLocaleDateString("en-ca")}
+                </TableCell>
+                <TableCell>
+                  {new Date(supplier.updated_at).toLocaleDateString("en-ca")}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={0}>Total:</TableCell>
+              <TableCell>{suppliers.length}</TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+        <PaginationComponent
+          page={page}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </>
   );
 }

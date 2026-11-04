@@ -132,102 +132,106 @@ export default function Products() {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
-        <p className="text-2xl font-bold text-primary">Inventory Products</p>
-        <AddProductDialog onProductCreated={handleProductCreated} />
-      </div>
-      <Table>
-        <TableCaption>A list of your products inventory.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="text-primary">#</TableHead>
-            <TableHead className="w-37.5 text-primary">Product Name</TableHead>
-            <TableHead className="text-primary">SKU</TableHead>
-            <TableHead className="text-primary">Price</TableHead>
-            <TableHead className="text-primary">Status</TableHead>
-            <TableHead className="text-primary">Stock</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {products.map((product, index) => (
-            <TableRow key={product.id}>
-              <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell className="font-medium">{product.name}</TableCell>
-              <TableCell>{product.sku}</TableCell>
-              <TableCell>${product.price}</TableCell>
+      <div className="bg-white/80 backdrop-blur-xl border border-white/30 shadow-lg p-6 rounded-lg">
+        <div className="flex justify-between items-center mb-4">
+          <p className="text-2xl font-bold text-primary">Inventory Products</p>
+          <AddProductDialog onProductCreated={handleProductCreated} />
+        </div>
+        <Table>
+          <TableCaption>A list of your products inventory.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-primary">#</TableHead>
+              <TableHead className="w-37.5 text-primary">
+                Product Name
+              </TableHead>
+              <TableHead className="text-primary">SKU</TableHead>
+              <TableHead className="text-primary">Price</TableHead>
+              <TableHead className="text-primary">Status</TableHead>
+              <TableHead className="text-primary">Stock</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {products.map((product, index) => (
+              <TableRow key={product.id}>
+                <TableCell className="font-medium">{index + 1}</TableCell>
+                <TableCell className="font-medium">{product.name}</TableCell>
+                <TableCell>{product.sku}</TableCell>
+                <TableCell>${product.price}</TableCell>
+                <TableCell>
+                  {product.is_active === 1 ? "Active" : "Inactive"}
+                </TableCell>
+                <TableCell>{product.stock_quantity}</TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger
+                      render={
+                        <Button variant="ghost" size="icon" className="size-8">
+                          <MoreHorizontalIcon />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      }
+                    />
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={() => handleEditProduct(product)}
+                      >
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => handleViewProduct(product)}
+                      >
+                        View
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        variant="destructive"
+                        onClick={() => handleDeleteProduct(product.id)}
+                      >
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={5}>Total</TableCell>
               <TableCell>
-                {product.is_active === 1 ? "Active" : "Inactive"}
-              </TableCell>
-              <TableCell>{product.stock_quantity}</TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    render={
-                      <Button variant="ghost" size="icon" className="size-8">
-                        <MoreHorizontalIcon />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
-                    }
-                  />
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem
-                      onClick={() => handleEditProduct(product)}
-                    >
-                      Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => handleViewProduct(product)}
-                    >
-                      View
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      variant="destructive"
-                      onClick={() => handleDeleteProduct(product.id)}
-                    >
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                {products.reduce(
+                  (acc, product) => acc + product.stock_quantity,
+                  0,
+                )}
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={5}>Total</TableCell>
-            <TableCell>
-              {products.reduce(
-                (acc, product) => acc + product.stock_quantity,
-                0,
-              )}
-            </TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
-      {editingProduct && (
-        <EditProductDialog
-          key={editingProduct.id}
-          open={editOpen}
-          onOpenChange={setEditOpen}
-          editingProduct={editingProduct}
-          onSubmit={handleUpdateProduct}
+          </TableFooter>
+        </Table>
+        {editingProduct && (
+          <EditProductDialog
+            key={editingProduct.id}
+            open={editOpen}
+            onOpenChange={setEditOpen}
+            editingProduct={editingProduct}
+            onSubmit={handleUpdateProduct}
+          />
+        )}
+        {viewingProduct && (
+          <ViewProductDialog
+            key={viewingProduct.id}
+            open={viewOpen}
+            onOpenChange={setViewOpen}
+            viewingProduct={viewingProduct}
+          />
+        )}
+        <PaginationComponent
+          page={page}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
         />
-      )}
-      {viewingProduct && (
-        <ViewProductDialog
-          key={viewingProduct.id}
-          open={viewOpen}
-          onOpenChange={setViewOpen}
-          viewingProduct={viewingProduct}
-        />
-      )}
-      <PaginationComponent
-        page={page}
-        pageSize={pageSize}
-        onPageChange={handlePageChange}
-      />
+      </div>
     </>
   );
 }
