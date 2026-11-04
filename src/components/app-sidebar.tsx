@@ -155,6 +155,17 @@ const data = {
       ],
     },
     {
+      title: "Notes",
+      url: "#",
+      icon: <NotepadText />,
+      items: [
+        {
+          title: "All Notes",
+          url: "/dashboard/notes",
+        },
+      ],
+    },
+    {
       title: "Settings",
       url: "#",
       icon: <Settings2Icon />,

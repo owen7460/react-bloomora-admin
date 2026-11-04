@@ -6,6 +6,7 @@ import Products from "@/pages/Products";
 import Summary from "@/pages/Summary";
 import Signup from "@/pages/Signup";
 import Suppliers from "@/pages/Suppliers";
+import Notes from "@/pages/Notes";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "suppliers",
         element: <Suppliers />,
+      },
+      {
+        path: "notes",
+        element: <Notes />,
       },
     ],
   },
