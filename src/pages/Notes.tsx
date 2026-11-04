@@ -1,3 +1,3 @@
 export default function Notes() {
-  return <div>Notes -- coming soon</div>;
+  return <div>Notes page</div>;
 }
