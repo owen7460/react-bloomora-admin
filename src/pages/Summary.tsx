@@ -12,7 +12,7 @@ export default function Summary() {
         <h1 className=" text-left text-4xl font-bold text-primary">
           Welcome, admin -- {email || "."}
         </h1>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-white">
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
             year: "numeric",
