@@ -76,7 +76,9 @@ export default function PaginationComponent({
               className={
                 isFirstPage ? "pointer-events-none opacity-50" : undefined
               }
-              onClick={() => onPageChange(page - 1, pageSize)}
+              onClick={() => {
+                if (!isFirstPage) onPageChange(page - 1, pageSize);
+              }}
             />
           </PaginationItem>
           <PaginationItem>

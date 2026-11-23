@@ -19,7 +19,7 @@ const getProducts = async (
   pageSize: number = 25,
 ): Promise<GetProductsResponse> => {
   const res = await http.get<GetProductsResponse>(
-    `/products?page=${page}&pageSize=${pageSize}`,
+    `/products/?page=${page}&pageSize=${pageSize}`,
   );
   return res.data;
 };

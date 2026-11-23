@@ -10,7 +10,7 @@ import type {
 } from "@/types/announcements";
 
 const getAnnouncements = async (): Promise<GetAnnouncementsResponse> => {
-  const res = await http.get<GetAnnouncementsResponse>("/announcements");
+  const res = await http.get<GetAnnouncementsResponse>("/announcements/");
   return res.data;
 };
 
@@ -25,7 +25,7 @@ const createAnnouncement = async (
   payload: CreateAnnouncementPayload,
 ): Promise<CreateAnnouncementResponse> => {
   const res = await http.post<CreateAnnouncementResponse>(
-    "/announcements",
+    "/announcements/",
     payload,
   );
   return res.data;
@@ -35,7 +35,7 @@ const updateAnnouncement = async (
   id: number,
   payload: UpdateAnnouncementPayload,
 ): Promise<UpdateAnnouncementResponse> => {
-  const res = await http.put<UpdateAnnouncementResponse>(
+  const res = await http.patch<UpdateAnnouncementResponse>(
     `/announcements/${id}`,
     payload,
   );

@@ -14,16 +14,16 @@ export default function LowStockCard() {
       try {
         const allProducts: Product[] = [];
         const pageSize = 100;
-        let skip = 0;
+        let page = 1;
 
         // Read every page so the lowest stock items can come from any page.
         while (!cancelled) {
-          const res = await getProducts(skip, pageSize);
+          const res = await getProducts(page, pageSize);
           if (cancelled) return;
 
           allProducts.push(...res.data);
           if (res.data.length < pageSize) break;
-          skip += res.data.length;
+          page += 1;
         }
 
         if (!cancelled) {
