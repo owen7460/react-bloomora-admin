@@ -64,90 +64,89 @@ export default function Login() {
   }, [location, navigate]);
 
   return (
-    <div className="grid grid-cols-2 h-screen">
+    <div className="relative h-screen overflow-hidden">
       <img
-        src="/bloomora01.jpg"
+        src="/bloomora03.png"
         alt="Background"
-        className="w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="flex justify-center items-center p-6">
-        <Card className="w-full py-14 px-6 max-w-lg bg-white/80 [--card-spacing:--spacing(12)]">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Welcome back,</CardTitle>
-            <CardTitle className="text-3xl font-bold">Bloomora Admin</CardTitle>
-            <CardDescription>
-              Enter your email below to login to your account
-            </CardDescription>
-            <CardAction>
-              <Button variant="link">
-                <Link to="/signup">Sign Up</Link>
-              </Button>
-            </CardAction>
-          </CardHeader>{" "}
-          <form onSubmit={handleLogin}>
-            <CardContent>
-              {successMessage && (
-                <div className="flex flex-col gap-2 mb-6  ">
-                  <p className="text-base text-green-700">
-                    Sign up successful, now you can login
-                  </p>
-                </div>
-              )}
-              {loginError && (
-                <div className="flex flex-col gap-2 mb-6  ">
-                  <p className="text-base text-red-700">
-                    Invalid email or password. Please try again.
-                  </p>
-                </div>
-              )}
-              <div className="flex flex-col gap-6">
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-                    <a
-                      href="#"
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                    >
-                      Forgot your password?
-                    </a>
-                  </div>
-                  <Input
-                    id="password"
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
+      <Card className="absolute z-10 top-1/2 right-[12%] -translate-y-1/2 w-full py-14 px-6 max-w-lg bg-white/50 backdrop-blur-sm [--card-spacing:--spacing(14)]">
+        <CardHeader className="text-primary">
+          <CardTitle className="text-2xl font-bold">Welcome back,</CardTitle>
+          <CardTitle className="text-3xl font-bold">Bloomora Admin</CardTitle>
+          <CardDescription className="text-black">
+            Enter your email below to login to your account
+          </CardDescription>
+          <CardAction>
+            <Button variant="link">
+              <Link to="/signup">Sign Up</Link>
+            </Button>
+          </CardAction>
+        </CardHeader>{" "}
+        <form onSubmit={handleLogin}>
+          <CardContent>
+            {successMessage && (
+              <div className="flex flex-col gap-2 mb-6  ">
+                <p className="text-base text-green-700">
+                  Sign up successful, now you can login
+                </p>
               </div>
-            </CardContent>
-            <CardFooter className="flex-col mt-6 gap-4 bg-transparent">
-              <Button type="submit" className="w-full ">
-                Login
-              </Button>
-              <Button variant="outline" className="w-full">
-                <img src="/google.svg" alt="" className="size-4" />
-                Login with Google
-              </Button>
-              <Button variant="outline" className="w-full">
-                <img src="/github.svg" alt="" className="size-4" />
-                Login with GitHub
-              </Button>
-            </CardFooter>
-          </form>
-        </Card>
-      </div>
+            )}
+            {loginError && (
+              <div className="flex flex-col gap-2 mb-6  ">
+                <p className="text-base text-red-700">
+                  Invalid email or password. Please try again.
+                </p>
+              </div>
+            )}
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="placeholder:text-black"
+                />
+              </div>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <a
+                    href="#"
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter className="flex-col mt-6 gap-4 bg-transparent">
+            <Button type="submit" className="w-full ">
+              Login
+            </Button>
+            <Button variant="outline" className="w-full">
+              <img src="/google.svg" alt="" className="size-4" />
+              Login with Google
+            </Button>
+            <Button variant="outline" className="w-full">
+              <img src="/github.svg" alt="" className="size-4" />
+              Login with GitHub
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
     </div>
   );
 }

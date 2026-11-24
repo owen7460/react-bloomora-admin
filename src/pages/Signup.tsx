@@ -52,86 +52,87 @@ export default function Signup() {
   };
 
   return (
-    <div className="grid grid-cols-2 h-screen">
+    <div className="relative h-screen overflow-hidden">
       <img
-        src="/bloomora01.jpg"
+        src="/bloomora03.png"
         alt="Background"
-        className="w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="flex justify-center items-center p-6">
-        <Card className="w-full py-14 px-6 max-w-lg bg-white/80 [--card-spacing:--spacing(12)]">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Welcome,</CardTitle>
-            <CardTitle className="text-3xl font-bold">New User</CardTitle>
-            <CardDescription>
-              Enter your information below to sign up to your account
-            </CardDescription>
-            <CardAction>
-              <Button variant="link">
-                <Link to="/">Login</Link>
-              </Button>
-            </CardAction>
-          </CardHeader>
-          <form onSubmit={handleSignup}>
-            <CardContent>
-              <FieldSet className="w-full max-w-xs">
-                <FieldGroup>
-                  <Field>
-                    <FieldLabel htmlFor="email">Email</FieldLabel>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="example@gmail.com"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <FieldDescription>
-                      Enter your email to sign up to your account.
-                    </FieldDescription>
-                  </Field>
-                  <Field>
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <FieldDescription>
-                      Must be at least 8 characters long.
-                    </FieldDescription>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Field>
-                  <Field>
-                    <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
-                    </FieldLabel>
-                    <FieldDescription>
-                      Confirm your password to ensure you have entered it
-                      correctly.
-                    </FieldDescription>
-                    <Input
-                      id="confirm-password"
-                      type="password"
-                      placeholder="••••••••"
-                      required
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                  </Field>
-                </FieldGroup>
-              </FieldSet>
-            </CardContent>
-            <CardFooter className="flex-col mt-6 gap-4 bg-transparent">
-              <Button type="submit" className="w-full">
-                Sign Up
-              </Button>
-            </CardFooter>
-          </form>
-        </Card>
-      </div>
+      <Card className="absolute z-10 top-1/2 right-[12%] -translate-y-1/2 w-full py-14 px-6 max-w-lg bg-white/50 backdrop-blur-sm [--card-spacing:--spacing(14)]">
+        <CardHeader className="text-primary">
+          <CardTitle className="text-2xl font-bold">Welcome,</CardTitle>
+          <CardTitle className="text-3xl font-bold">New User</CardTitle>
+          <CardDescription className="text-black">
+            Enter your information below to sign up to your account
+          </CardDescription>
+          <CardAction>
+            <Button variant="link">
+              <Link to="/">Login</Link>
+            </Button>
+          </CardAction>
+        </CardHeader>
+        <form onSubmit={handleSignup}>
+          <CardContent>
+            <FieldSet className="w-full max-w-xs">
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="example@gmail.com"
+                    className="placeholder:text-black"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <FieldDescription className="text-black">
+                    Enter your email to sign up to your account.
+                  </FieldDescription>
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldDescription className="text-black">
+                    Must be at least 8 characters long.
+                  </FieldDescription>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    className="placeholder:text-black"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="confirm-password">
+                    Confirm Password
+                  </FieldLabel>
+                  <FieldDescription className="text-black">
+                    Confirm your password to ensure you have entered it
+                    correctly.
+                  </FieldDescription>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    placeholder="••••••••"
+                    className="placeholder:text-black"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </Field>
+              </FieldGroup>
+            </FieldSet>
+          </CardContent>
+          <CardFooter className="flex-col mt-6 gap-4 bg-transparent">
+            <Button type="submit" className="w-full">
+              Sign Up
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
     </div>
   );
 }
