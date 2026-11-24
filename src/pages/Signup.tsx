@@ -52,79 +52,86 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex bg-[url(/bg.jpg)] bg-cover bg-center justify-center items-center h-screen">
-      <Card className="w-full py-14 px-6 max-w-md bg-white/80 backdrop-blur-sm [--card-spacing:--spacing(8)]">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Welcome,</CardTitle>
-          <CardTitle className="text-3xl font-bold">New User</CardTitle>
-          <CardDescription>
-            Enter your information below to sign up to your account
-          </CardDescription>
-          <CardAction>
-            <Button variant="link">
-              <Link to="/">Login</Link>
-            </Button>
-          </CardAction>
-        </CardHeader>
-        <form onSubmit={handleSignup}>
-          <CardContent>
-            <FieldSet className="w-full max-w-xs">
-              <FieldGroup>
-                <Field>
-                  <FieldLabel htmlFor="email">Email</FieldLabel>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="example@gmail.com"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <FieldDescription>
-                    Enter your email to sign up to your account.
-                  </FieldDescription>
-                </Field>
-                <Field>
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <FieldDescription>
-                    Must be at least 8 characters long.
-                  </FieldDescription>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="••••••••"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Field>
-                <Field>
-                  <FieldLabel htmlFor="confirm-password">
-                    Confirm Password
-                  </FieldLabel>
-                  <FieldDescription>
-                    Confirm your password to ensure you have entered it
-                    correctly.
-                  </FieldDescription>
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    placeholder="••••••••"
-                    required
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                </Field>
-              </FieldGroup>
-            </FieldSet>
-          </CardContent>
-          <CardFooter className="flex-col mt-6 gap-4 bg-transparent">
-            <Button type="submit" className="w-full">
-              Sign Up
-            </Button>
-          </CardFooter>
-        </form>
-      </Card>
+    <div className="grid grid-cols-2 h-screen">
+      <img
+        src="/bloomora01.jpg"
+        alt="Background"
+        className="w-full h-full object-cover"
+      />
+      <div className="flex justify-center items-center p-6">
+        <Card className="w-full py-14 px-6 max-w-lg bg-white/80 [--card-spacing:--spacing(12)]">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold">Welcome,</CardTitle>
+            <CardTitle className="text-3xl font-bold">New User</CardTitle>
+            <CardDescription>
+              Enter your information below to sign up to your account
+            </CardDescription>
+            <CardAction>
+              <Button variant="link">
+                <Link to="/">Login</Link>
+              </Button>
+            </CardAction>
+          </CardHeader>
+          <form onSubmit={handleSignup}>
+            <CardContent>
+              <FieldSet className="w-full max-w-xs">
+                <FieldGroup>
+                  <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="example@gmail.com"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <FieldDescription>
+                      Enter your email to sign up to your account.
+                    </FieldDescription>
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <FieldDescription>
+                      Must be at least 8 characters long.
+                    </FieldDescription>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="confirm-password">
+                      Confirm Password
+                    </FieldLabel>
+                    <FieldDescription>
+                      Confirm your password to ensure you have entered it
+                      correctly.
+                    </FieldDescription>
+                    <Input
+                      id="confirm-password"
+                      type="password"
+                      placeholder="••••••••"
+                      required
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                  </Field>
+                </FieldGroup>
+              </FieldSet>
+            </CardContent>
+            <CardFooter className="flex-col mt-6 gap-4 bg-transparent">
+              <Button type="submit" className="w-full">
+                Sign Up
+              </Button>
+            </CardFooter>
+          </form>
+        </Card>
+      </div>
     </div>
   );
 }
