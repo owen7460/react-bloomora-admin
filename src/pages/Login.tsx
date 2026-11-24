@@ -137,7 +137,12 @@ export default function Login() {
                 Login
               </Button>
               <Button variant="outline" className="w-full">
+                <img src="/google.svg" alt="" className="size-4" />
                 Login with Google
+              </Button>
+              <Button variant="outline" className="w-full">
+                <img src="/github.svg" alt="" className="size-4" />
+                Login with GitHub
               </Button>
             </CardFooter>
           </form>
