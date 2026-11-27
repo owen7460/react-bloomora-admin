@@ -7,7 +7,7 @@ import { useAppSelector } from "@/store/hooks";
 export default function Summary() {
   const email = useAppSelector((state) => state.auth.email);
   return (
-    <div className="h-screen w-full">
+    <div className="w-full">
       <div className="p-8 space-y-4">
         <h1 className=" text-left text-4xl font-bold text-primary">
           Welcome, admin -- {email || "."}
@@ -21,7 +21,7 @@ export default function Summary() {
           })}
         </p>
       </div>
-      <div className="flex flex-wrap items-stretch gap-6 p-4">
+      <div className="flex justify-start items-start flex-wrap gap-6 p-4">
         <AnnouncementCard />
         <LowStockCard />
         <UpcomingEventsCard />

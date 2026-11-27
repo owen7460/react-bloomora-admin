@@ -54,27 +54,27 @@ export default function LowStockCard() {
   }, []);
 
   return (
-    <div className="w-75 bg-gray-100 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105">
+    <div className="w-75 bg-white/25 backdrop-blur-lg border border-white/30 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105">
       <h2 className="text-primary text-xl font-bold pb-2">Stock Alert 📦</h2>
-      <p className="text-sm text-gray-500 pb-4">
+      <p className="text-sm text-black pb-4">
         4 products with the lowest stock
       </p>
       {isLoading ? (
-        <p className="text-sm text-gray-500">Loading stock levels...</p>
+        <p className="text-sm text-black">Loading stock levels...</p>
       ) : error ? (
-        <p role="alert" className="text-sm text-gray-500">
+        <p role="alert" className="text-sm text-black">
           {error}
         </p>
       ) : products.length > 0 ? (
-        <ol className="space-y-4">
+        <ol className="space-y-4 text-black">
           {products.map((product) => (
             <li key={product.id}>
-              <h3 className="text-base break-words">{product.name}</h3>
-              <p className="text-sm text-gray-500">SKU: {product.sku}</p>
+              <h3 className="text-base truncate">{product.name}</h3>
+              <p className="text-sm text-black">SKU: {product.sku}</p>
               <p className="text-sm font-medium">
                 {product.stock_quantity} {product.unit} remaining
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-black">
                 Alert level: {product.low_stock_threshold} {product.unit}
               </p>
               <p
@@ -94,7 +94,7 @@ export default function LowStockCard() {
           ))}
         </ol>
       ) : (
-        <p className="text-sm text-gray-500">No products at the moment.</p>
+        <p className="text-sm text-white">No products at the moment.</p>
       )}
     </div>
   );

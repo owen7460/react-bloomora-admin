@@ -19,7 +19,16 @@ export default function Page() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className="min-w-0 bg-[url('/bg-dashboard.jpg')] bg-cover bg-center">
+      <SidebarInset className="relative isolate min-w-0 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-center"
+        >
+          <source src="/florist_table.webm" type="video/webm" />
+        </video>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
