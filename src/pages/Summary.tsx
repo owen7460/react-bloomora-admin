@@ -5,6 +5,7 @@ import UpcomingEventsCard from "@/components/UpcomingEventsCard";
 import { useAppSelector } from "@/store/hooks";
 import TotalStockCard from "@/components/Dashboard/TotalStockCard";
 import NewsSearchCard from "@/components/Dashboard/NewsSearchCard";
+import UpcomingDeliveriesCard from "@/components/Dashboard/UpcomingDeliveriesCard";
 
 export default function Summary() {
   const email = useAppSelector((state) => state.auth.email);
@@ -25,7 +26,7 @@ export default function Summary() {
       </div>
       <div className="max-w-[1920px] px-8 grid grid-cols-5 gap-8">
         <TotalStockCard />
-        <TotalStockCard />
+        <UpcomingDeliveriesCard />
         <TotalStockCard />
         <AnnouncementCard className="row-span-2" />
         <LowStockCard className="row-span-2" />
