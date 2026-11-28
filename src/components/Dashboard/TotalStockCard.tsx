@@ -77,6 +77,7 @@ export default function TotalStockCard() {
       <h2 className="text-2xl font-bold text-primary">Total Stock</h2>
       <p className="text-6xl pt-4">{totalStock ?? "-"}</p>
       <p className="text-sm text-zinc-600 pt-2">The total quantity of items.</p>
+      <hr className="mt-8 w-1/3 border-black/10 " />
     </div>
   );
 }
