@@ -25,7 +25,7 @@ import { notifySuccess, notifyError } from "@/lib/toast";
 // import { Button } from "@/components/ui/button";
 // import { MoreHorizontalIcon } from "lucide-react";
 import PaginationComponent from "@/components/Pagination";
-import { ShimmerMarker } from "@/components/Shimmer";
+import ShimmerMarker from "@/components/ShimmerMarker";
 
 export default function Suppliers() {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);

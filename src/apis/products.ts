@@ -8,7 +8,7 @@ import type {
   DeleteProductResponse,
   GetProductResponse,
 } from "@/types/products";
-
+import type { TotalStock } from "@/types/totalStock";
 const getProduct = async (id: number): Promise<GetProductResponse> => {
   const res = await http.get<GetProductResponse>(`/products/${id}`);
   return res.data;
@@ -47,4 +47,16 @@ const deleteProduct = async (id: number): Promise<DeleteProductResponse> => {
   return res.data;
 };
 
-export { getProduct, getProducts, createProduct, updateProduct, deleteProduct };
+const getTotalStock = async (): Promise<TotalStock> => {
+  const res = await http.get<TotalStock>(`/products/total`);
+  return res.data;
+};
+
+export {
+  getProduct,
+  getProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getTotalStock,
+};

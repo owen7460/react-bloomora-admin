@@ -33,7 +33,7 @@ export default function LowStockCard({ className }: { className?: string }) {
               .sort(
                 (a, b) => a.stock_quantity - b.stock_quantity || a.id - b.id,
               )
-              .slice(0, 4),
+              .slice(0, 3),
           );
         }
       } catch {

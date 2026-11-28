@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getNotes } from "@/apis/notes";
 import type { Note } from "@/types/notes";
-import { ShimmerMarker } from "@/components/Shimmer";
+import ShimmerMarker from "@/components/ShimmerMarker";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 

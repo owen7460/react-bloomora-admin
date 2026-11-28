@@ -3,7 +3,7 @@ import AnnouncementCard from "@/components/AnnouncementCard";
 import LowStockCard from "@/components/LowStockCard";
 import UpcomingEventsCard from "@/components/UpcomingEventsCard";
 import { useAppSelector } from "@/store/hooks";
-import TotalCard from "@/components/Dashboard/TotalCard";
+import TotalStockCard from "@/components/Dashboard/TotalStockCard";
 import NewsSearchCard from "@/components/Dashboard/NewsSearchCard";
 
 export default function Summary() {
@@ -24,14 +24,14 @@ export default function Summary() {
         </p>
       </div>
       <div className="max-w-[1920px] px-8 grid grid-cols-5 gap-8">
-        <TotalCard />
-        <TotalCard />
-        <TotalCard />
+        <TotalStockCard />
+        <TotalStockCard />
+        <TotalStockCard />
         <AnnouncementCard className="row-span-2" />
         <LowStockCard className="row-span-2" />
-        <TotalCard />
-        <TotalCard />
-        <TotalCard />
+        <TotalStockCard />
+        <TotalStockCard />
+        <TotalStockCard />
         <NewsSearchCard className="col-span-2 row-span-2" />
         <AgentSuggestionCard className="col-span-2 row-span-2" />
         <UpcomingEventsCard className="row-span-2" />
