@@ -10,7 +10,7 @@ import type {
 } from "@/types/announcements";
 
 const getAnnouncements = async (): Promise<GetAnnouncementsResponse> => {
-  const res = await http.get<GetAnnouncementsResponse>("/announcements/");
+  const res = await http.get<GetAnnouncementsResponse>("/announcements");
   return res.data;
 };
 

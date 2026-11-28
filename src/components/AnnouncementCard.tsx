@@ -1,9 +1,16 @@
 import { getAnnouncements } from "@/apis/announcements";
 import type { Announcement } from "@/types/announcements";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
-export default function AnnouncementCard() {
-  const [announcement, setAnnouncement] = useState<Announcement | null>(null);
+export default function AnnouncementCard({
+  className,
+}: {
+  className?: string;
+}) {
+  const [announcements, setAnnouncements] = useState<Announcement[] | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,8 +21,7 @@ export default function AnnouncementCard() {
       try {
         const res = await getAnnouncements();
         if (!cancelled) {
-          // The API sorts pinned announcements first, then newest first.
-          setAnnouncement(res.data.find((item) => item.is_published) ?? null);
+          setAnnouncements(res.data.filter((item) => item.is_pinned) ?? null);
         }
       } catch {
         if (!cancelled) {
@@ -36,7 +42,12 @@ export default function AnnouncementCard() {
   }, []);
 
   return (
-    <div className="w-75 bg-gray/50 backdrop-blur-sm border border-white/30 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105">
+    <div
+      className={cn(
+        "bg-white/25 backdrop-blur-sm border border-white/30 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105",
+        className,
+      )}
+    >
       <h2 className="text-primary text-xl font-bold pb-2">Announcement 📣</h2>
       {isLoading && (
         <p className="text-sm text-white">Loading announcement...</p>
@@ -46,15 +57,27 @@ export default function AnnouncementCard() {
           {error}
         </p>
       )}
-      {!isLoading && !error && !announcement && (
+      {!isLoading && !error && !announcements && (
         <p className="text-sm text-white">No announcements at the moment.</p>
       )}
-      {!isLoading && !error && announcement && (
-        <div>
-          <h3 className="text-base pb-2">{announcement.title}</h3>
-          <p className="text-sm text-white whitespace-pre-line">
-            {announcement.content}
-          </p>
+      {!isLoading && !error && announcements && (
+        <div className="space-y-4">
+          {announcements.map((announcement) => (
+            <div key={announcement.id}>
+              <p className="font-bold">{announcement.title}</p>
+              <p className="text-sm text-zinc-600">
+                {new Date(announcement.created_at).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+              <p className="text-sm text-black whitespace-pre-line">
+                {announcement.content}
+              </p>
+            </div>
+          ))}
         </div>
       )}
     </div>

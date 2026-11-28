@@ -1,8 +1,18 @@
 import { agentSuggestions } from "@/data/agentSuggestions";
+import { cn } from "@/lib/utils";
 
-export default function AgentSuggestionCard() {
+export default function AgentSuggestionCard({
+  className,
+}: {
+  className?: string;
+}) {
   return (
-    <div className="w-75 bg-black/20 backdrop-blur-xl border border-white/30 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105">
+    <div
+      className={cn(
+        "bg-black/20 backdrop-blur-xl border border-white/30 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105",
+        className,
+      )}
+    >
       <h2 className="text-primary text-xl font-bold pb-2">
         Agent Suggestion ✨
       </h2>

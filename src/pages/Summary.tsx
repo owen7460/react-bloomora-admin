@@ -3,6 +3,8 @@ import AnnouncementCard from "@/components/AnnouncementCard";
 import LowStockCard from "@/components/LowStockCard";
 import UpcomingEventsCard from "@/components/UpcomingEventsCard";
 import { useAppSelector } from "@/store/hooks";
+import TotalCard from "@/components/Dashboard/TotalCard";
+import NewsSearchCard from "@/components/Dashboard/NewsSearchCard";
 
 export default function Summary() {
   const email = useAppSelector((state) => state.auth.email);
@@ -21,11 +23,18 @@ export default function Summary() {
           })}
         </p>
       </div>
-      <div className="flex justify-start items-start flex-wrap gap-6 p-4">
-        <AnnouncementCard />
-        <LowStockCard />
-        <UpcomingEventsCard />
-        <AgentSuggestionCard />
+      <div className="max-w-[1920px] px-8 grid grid-cols-5 gap-8">
+        <TotalCard />
+        <TotalCard />
+        <TotalCard />
+        <AnnouncementCard className="row-span-2" />
+        <LowStockCard className="row-span-2" />
+        <TotalCard />
+        <TotalCard />
+        <TotalCard />
+        <NewsSearchCard className="col-span-2 row-span-2" />
+        <AgentSuggestionCard className="col-span-2 row-span-2" />
+        <UpcomingEventsCard className="row-span-2" />
       </div>
     </div>
   );

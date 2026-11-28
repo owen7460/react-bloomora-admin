@@ -1,8 +1,9 @@
 import { getProducts } from "@/apis/products";
 import type { Product } from "@/types/products";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
-export default function LowStockCard() {
+export default function LowStockCard({ className }: { className?: string }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +55,12 @@ export default function LowStockCard() {
   }, []);
 
   return (
-    <div className="w-75 bg-white/25 backdrop-blur-lg border border-white/30 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105">
+    <div
+      className={cn(
+        "bg-white/25 backdrop-blur-sm border border-white/30 shadow-lg rounded-lg p-8 transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105",
+        className,
+      )}
+    >
       <h2 className="text-primary text-xl font-bold pb-2">Stock Alert 📦</h2>
       <p className="text-sm text-black pb-4">
         4 products with the lowest stock

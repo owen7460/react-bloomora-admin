@@ -1,6 +1,11 @@
 import { upcomingEvents } from "@/data/upcomingEvents";
+import { cn } from "@/lib/utils";
 
-export default function UpcomingEventsCard() {
+export default function UpcomingEventsCard({
+  className,
+}: {
+  className?: string;
+}) {
   const today = new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Edmonton",
     year: "numeric",
@@ -17,7 +22,12 @@ export default function UpcomingEventsCard() {
     .slice(0, 4);
 
   return (
-    <div className="w-75 bg-gray-100 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105">
+    <div
+      className={cn(
+        "bg-gray-100 shadow-2xl p-10 rounded-md transition-all duration-150 ease-in hover:-translate-y-3 hover:scale-105",
+        className,
+      )}
+    >
       <h2 className="text-primary text-xl font-bold pb-2">
         Upcoming Holidays &amp; Events 📅
       </h2>
